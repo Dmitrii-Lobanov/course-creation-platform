@@ -1,40 +1,72 @@
+import { desc, eq } from "drizzle-orm";
 import { BookOpen, GraduationCap, LineChart, Plus, Users } from "lucide-react";
 import Link from "next/link";
 
+import { db } from "@/db/client";
+import { courses } from "@/db/schema";
 import { AppShell } from "@/shared/ui/app-shell";
 import { MetricCard } from "@/shared/ui/metric-card";
 import { PageHeader } from "@/shared/ui/page-header";
 import { SectionCard } from "@/shared/ui/section-card";
 import { StatusPill } from "@/shared/ui/status-pill";
 
-const stats = [
-  {
-    label: "Draft courses",
-    value: "0",
-    description: "Courses currently being prepared for publishing.",
-    icon: <BookOpen className="size-5" />,
-  },
-  {
-    label: "Published courses",
-    value: "0",
-    description: "Courses visible to students in the catalog.",
-    icon: <GraduationCap className="size-5" />,
-  },
-  {
-    label: "Students enrolled",
-    value: "0",
-    description: "Total enrollments across all published courses.",
-    icon: <Users className="size-5" />,
-  },
-  {
-    label: "Average progress",
-    value: "—",
-    description: "Progress analytics will appear after enrollments.",
-    icon: <LineChart className="size-5" />,
-  },
-];
+export const dynamic = "force-dynamic";
 
-export default function DashboardPage() {
+function formatDate(value: Date) {
+  return new Intl.DateTimeFormat("en", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  }).format(value);
+}
+
+export default async function DashboardPage() {
+  const allCourses = await db
+    .select({
+      id: courses.id,
+      title: courses.title,
+      description: courses.description,
+      level: courses.level,
+      status: courses.status,
+      updatedAt: courses.updatedAt,
+    })
+    .from(courses)
+    .orderBy(desc(courses.updatedAt));
+
+  const draftCourses = allCourses.filter((course) => course.status === "draft");
+  const publishedCourses = allCourses.filter(
+    (course) => course.status === "published",
+  );
+
+  const recentCourses = allCourses.slice(0, 5);
+
+  const stats = [
+    {
+      label: "Draft courses",
+      value: String(draftCourses.length),
+      description: "Courses currently being prepared for publishing.",
+      icon: <BookOpen className="size-5" />,
+    },
+    {
+      label: "Published courses",
+      value: String(publishedCourses.length),
+      description: "Courses visible to students in the catalog.",
+      icon: <GraduationCap className="size-5" />,
+    },
+    {
+      label: "Students enrolled",
+      value: "0",
+      description: "Total enrollments across all published courses.",
+      icon: <Users className="size-5" />,
+    },
+    {
+      label: "Average progress",
+      value: "—",
+      description: "Progress analytics will appear after enrollments.",
+      icon: <LineChart className="size-5" />,
+    },
+  ];
+
   return (
     <AppShell>
       <main className="mx-auto max-w-7xl px-6 py-10">
@@ -67,40 +99,77 @@ export default function DashboardPage() {
                   Recent courses
                 </p>
                 <h2 className="mt-3 text-2xl font-bold text-slate-950">
-                  No courses yet
+                  {recentCourses.length > 0
+                    ? "Recently updated courses"
+                    : "No courses yet"}
                 </h2>
                 <p className="mt-2 max-w-xl leading-7 text-slate-600">
-                  Start with a course draft. The next milestones will add
-                  modules, lessons, publishing validation, enrollment, progress
-                  tracking, and analytics.
+                  {recentCourses.length > 0
+                    ? "Continue editing your latest drafts and prepare them for publishing."
+                    : "Start with a course draft. The next milestones will add modules, lessons, publishing validation, enrollment, progress tracking, and analytics."}
                 </p>
               </div>
 
-              <StatusPill tone="info">MVP stage</StatusPill>
+              <StatusPill tone="info">Database-backed</StatusPill>
             </div>
 
-            <div className="mt-8 rounded-2xl border border-dashed border-slate-300 bg-slate-50/70 p-8 text-center">
-              <div className="mx-auto flex size-12 items-center justify-center rounded-2xl bg-white shadow-sm">
-                <BookOpen className="size-6 text-indigo-600" />
+            {recentCourses.length === 0 ? (
+              <div className="mt-8 rounded-2xl border border-dashed border-slate-300 bg-slate-50/70 p-8 text-center">
+                <div className="mx-auto flex size-12 items-center justify-center rounded-2xl bg-white shadow-sm">
+                  <BookOpen className="size-6 text-indigo-600" />
+                </div>
+
+                <h3 className="mt-4 text-lg font-bold text-slate-950">
+                  Create your first course draft
+                </h3>
+
+                <p className="mx-auto mt-2 max-w-md text-sm leading-6 text-slate-600">
+                  Define the core course details now. Modules, lessons, preview
+                  mode, and publishing checks will be added inside the builder
+                  workflow.
+                </p>
+
+                <Link
+                  href="/dashboard/courses/new"
+                  className="mt-5 inline-flex items-center justify-center rounded-full bg-slate-950 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-slate-800"
+                >
+                  Start course draft
+                </Link>
               </div>
+            ) : (
+              <div className="mt-8 space-y-3">
+                {recentCourses.map((course) => (
+                  <Link
+                    key={course.id}
+                    href={`/dashboard/courses/${course.id}/builder`}
+                    className="block rounded-2xl border border-slate-200 bg-white p-5 transition hover:border-indigo-200 hover:bg-indigo-50/30"
+                  >
+                    <div className="flex items-start justify-between gap-4">
+                      <div>
+                        <h3 className="font-bold text-slate-950">
+                          {course.title}
+                        </h3>
+                        <p className="mt-1 line-clamp-1 text-sm text-slate-600">
+                          {course.description}
+                        </p>
+                      </div>
 
-              <h3 className="mt-4 text-lg font-bold text-slate-950">
-                Create your first course draft
-              </h3>
+                      <StatusPill
+                        tone={course.status === "draft" ? "warning" : "success"}
+                      >
+                        {course.status}
+                      </StatusPill>
+                    </div>
 
-              <p className="mx-auto mt-2 max-w-md text-sm leading-6 text-slate-600">
-                Define the core course details now. Modules, lessons, preview
-                mode, and publishing checks will be added inside the builder
-                workflow.
-              </p>
-
-              <Link
-                href="/dashboard/courses/new"
-                className="mt-5 inline-flex items-center justify-center rounded-full bg-slate-950 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-slate-800"
-              >
-                Start course draft
-              </Link>
-            </div>
+                    <div className="mt-4 flex flex-wrap items-center gap-3 text-sm text-slate-500">
+                      <span className="capitalize">{course.level}</span>
+                      <span>•</span>
+                      <span>Updated {formatDate(course.updatedAt)}</span>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            )}
           </SectionCard>
 
           <SectionCard>
