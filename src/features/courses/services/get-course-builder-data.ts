@@ -2,6 +2,7 @@ import { asc, eq } from "drizzle-orm";
 
 import { db } from "@/db/client";
 import { courseModules, courses, lessons } from "@/db/schema";
+import { buildCourseOutline } from "./build-course-outline";
 
 export async function getCourseBuilderData(courseId: string) {
   const [course] = await db
@@ -44,10 +45,7 @@ export async function getCourseBuilderData(courseId: string) {
     .where(eq(courseModules.courseId, courseId))
     .orderBy(asc(courseModules.position), asc(lessons.position));
 
-  const modulesWithLessons = modules.map((module) => ({
-    ...module,
-    lessons: lessonRows.filter((lesson) => lesson.moduleId === module.id),
-  }));
+  const modulesWithLessons = buildCourseOutline(modules, lessonRows);
 
   return {
     course,
