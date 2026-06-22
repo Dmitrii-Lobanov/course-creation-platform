@@ -77,4 +77,6 @@ jobs:
         run: npm ci --legacy-peer-deps
 
       - name: Build application
+        env:
+          DATABASE_URL: postgres://courseforge:courseforge@localhost:5432/courseforge
         run: npm run build
