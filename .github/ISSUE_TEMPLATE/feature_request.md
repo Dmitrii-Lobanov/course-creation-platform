@@ -3,7 +3,7 @@ name: Feature request
 about: Propose a product or engineering feature
 title: "[Feature]: "
 labels: enhancement
-assignees: ''
+assignees: ""
 ---
 
 ## Problem
@@ -24,6 +24,6 @@ What should not be included yet?
 
 ## Acceptance Criteria
 
-- [ ] 
-- [ ] 
-- [ ] 
+- [ ]
+- [ ]
+- [ ]

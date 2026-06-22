@@ -3,7 +3,7 @@ name: Bug report
 about: Report a bug or incorrect behavior
 title: "[Bug]: "
 labels: bug
-assignees: ''
+assignees: ""
 ---
 
 ## Description
@@ -16,9 +16,9 @@ What should have happened?
 
 ## Steps to Reproduce
 
-1. 
-2. 
-3. 
+1.
+2.
+3.
 
 ## Impact
 
