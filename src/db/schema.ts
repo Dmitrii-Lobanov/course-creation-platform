@@ -1,4 +1,5 @@
 import {
+  integer,
   pgEnum,
   pgTable,
   text,
@@ -18,6 +19,8 @@ export const courseStatusEnum = pgEnum("course_status", [
   "published",
   "archived",
 ]);
+
+export const lessonTypeEnum = pgEnum("lesson_type", ["text", "video"]);
 
 export const courses = pgTable("courses", {
   id: uuid("id").defaultRandom().primaryKey(),
@@ -41,5 +44,63 @@ export const courses = pgTable("courses", {
     .defaultNow(),
 });
 
+export const courseModules = pgTable("course_modules", {
+  id: uuid("id").defaultRandom().primaryKey(),
+
+  courseId: uuid("course_id")
+    .notNull()
+    .references(() => courses.id, {
+      onDelete: "cascade",
+    }),
+
+  title: varchar("title", { length: 120 }).notNull(),
+  position: integer("position").notNull(),
+
+  createdAt: timestamp("created_at", {
+    withTimezone: true,
+  })
+    .notNull()
+    .defaultNow(),
+
+  updatedAt: timestamp("updated_at", {
+    withTimezone: true,
+  })
+    .notNull()
+    .defaultNow(),
+});
+
+export const lessons = pgTable("lessons", {
+  id: uuid("id").defaultRandom().primaryKey(),
+
+  moduleId: uuid("module_id")
+    .notNull()
+    .references(() => courseModules.id, {
+      onDelete: "cascade",
+    }),
+
+  title: varchar("title", { length: 120 }).notNull(),
+  content: text("content"),
+  type: lessonTypeEnum("type").notNull().default("text"),
+  position: integer("position").notNull(),
+
+  createdAt: timestamp("created_at", {
+    withTimezone: true,
+  })
+    .notNull()
+    .defaultNow(),
+
+  updatedAt: timestamp("updated_at", {
+    withTimezone: true,
+  })
+    .notNull()
+    .defaultNow(),
+});
+
 export type Course = typeof courses.$inferSelect;
 export type NewCourse = typeof courses.$inferInsert;
+
+export type CourseModule = typeof courseModules.$inferSelect;
+export type NewCourseModule = typeof courseModules.$inferInsert;
+
+export type Lesson = typeof lessons.$inferSelect;
+export type NewLesson = typeof lessons.$inferInsert;
