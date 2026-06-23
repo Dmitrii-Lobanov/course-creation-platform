@@ -53,12 +53,62 @@ jobs:
       - name: Run unit tests
         run: npm run test:run
 
+  integration:
+    name: Integration tests
+    runs-on: ubuntu-latest
+    needs:
+      - test
+
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: courseforge
+          POSTGRES_PASSWORD: courseforge
+          POSTGRES_DB: courseforge_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U courseforge -d courseforge_test"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    env:
+      DATABASE_URL: postgres://courseforge:courseforge@localhost:5432/courseforge_test
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 25
+          cache: npm
+
+      - name: Setup npm
+        run: npm install -g npm@latest
+
+      - name: Install dependencies
+        run: npm ci --legacy-peer-deps
+
+      - name: Run migrations
+        run: npm run db:migrate
+
+      - name: Run integration tests
+        run: npm run test:integration
+
   build:
     name: Build
     runs-on: ubuntu-latest
     needs:
       - lint
       - test
+      - integration
+
+    env:
+      DATABASE_URL: postgres://courseforge:courseforge@localhost:5432/courseforge
 
     steps:
       - name: Checkout
@@ -77,6 +127,4 @@ jobs:
         run: npm ci --legacy-peer-deps
 
       - name: Build application
-        env:
-          DATABASE_URL: postgres://courseforge:courseforge@localhost:5432/courseforge
         run: npm run build
