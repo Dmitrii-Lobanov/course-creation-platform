@@ -8,6 +8,7 @@ import { PageHeader } from "@/shared/ui/page-header";
 import { SectionCard } from "@/shared/ui/section-card";
 import { StatusPill } from "@/shared/ui/status-pill";
 import { CreateModuleForm } from "@/features/courses/components/create-module-form";
+import { CreateLessonForm } from "@/features/courses/components/create-lesson-form";
 
 type CourseBuilderPageProps = {
   params: Promise<{
@@ -124,7 +125,7 @@ export default async function CourseBuilderPage({
                 {modules.map((module) => (
                   <div
                     key={module.id}
-                    className="rounded-2xl border border-border bg-card p-5"
+                    className="rounded-2xl border border-border bg-card/70 p-5"
                   >
                     <div className="flex items-center justify-between gap-4">
                       <h3 className="font-bold text-foreground">
@@ -136,18 +137,28 @@ export default async function CourseBuilderPage({
                       </span>
                     </div>
 
-                    {module.lessons.length > 0 && (
+                    {module.lessons.length > 0 ? (
                       <div className="mt-4 space-y-2">
                         {module.lessons.map((lesson) => (
                           <div
                             key={lesson.id}
-                            className="rounded-xl bg-muted/60 px-4 py-3 text-sm text-slate-700"
+                            className="rounded-xl border border-border bg-muted/50 px-4 py-3 text-sm text-foreground"
                           >
-                            {lesson.position}. {lesson.title}
+                            <div className="flex items-center justify-between gap-4">
+                              <span>
+                                {lesson.position}. {lesson.title}
+                              </span>
+
+                              <span className="rounded-full bg-primary/10 px-2.5 py-1 text-xs font-medium capitalize text-primary">
+                                {lesson.type}
+                              </span>
+                            </div>
                           </div>
                         ))}
                       </div>
-                    )}
+                    ) : null}
+
+                    <CreateLessonForm moduleId={module.id} />
                   </div>
                 ))}
               </div>

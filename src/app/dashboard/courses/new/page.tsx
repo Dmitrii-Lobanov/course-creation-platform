@@ -82,7 +82,9 @@ export default function NewCoursePage() {
                     ) : (
                       <Layers3 className="size-5 text-slate-400" />
                     )}
-                    <span className="text-sm text-muted-foreground">{item}</span>
+                    <span className="text-sm text-muted-foreground">
+                      {item}
+                    </span>
                   </div>
                 ))}
               </div>
