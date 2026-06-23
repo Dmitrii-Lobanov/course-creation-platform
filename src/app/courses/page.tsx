@@ -26,7 +26,7 @@ export default function CoursesPage() {
                 <h2 className="text-xl font-bold text-foreground">
                   Search and filters coming next
                 </h2>
-                <p className="mt-2 text-sm leading-6 text-slate-600">
+                <p className="mt-2 text-sm leading-6 text-muted-foreground">
                   Published courses will be searchable by title, level,
                   category, and enrollment status.
                 </p>
@@ -40,7 +40,7 @@ export default function CoursesPage() {
                 <h2 className="text-xl font-bold text-foreground">
                   No published courses yet
                 </h2>
-                <p className="mt-2 max-w-xl text-sm leading-6 text-slate-600">
+                <p className="mt-2 max-w-xl text-sm leading-6 text-muted-foreground">
                   Once instructor drafts can be persisted and published, courses
                   will appear here for students to browse and enroll.
                 </p>
@@ -49,7 +49,7 @@ export default function CoursesPage() {
               <StatusPill tone="info">MVP stage</StatusPill>
             </div>
 
-            <div className="mt-8 rounded-2xl border border-dashed border-slate-300 bg-slate-50/70 p-8 text-center">
+            <div className="mt-8 rounded-2xl border border-dashed border-border bg-muted/60 p-8 text-center">
               <div className="mx-auto flex size-12 items-center justify-center rounded-2xl bg-card shadow-sm">
                 <BookOpen className="size-6 text-primary" />
               </div>
@@ -58,7 +58,7 @@ export default function CoursesPage() {
                 Catalog is ready for real data
               </h3>
 
-              <p className="mx-auto mt-2 max-w-md text-sm leading-6 text-slate-600">
+              <p className="mx-auto mt-2 max-w-md text-sm leading-6 text-muted-foreground">
                 The next backend milestones will add database-backed courses,
                 publishing workflow, enrollment, and progress tracking.
               </p>

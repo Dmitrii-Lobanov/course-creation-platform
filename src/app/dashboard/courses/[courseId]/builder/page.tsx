@@ -38,7 +38,7 @@ export default async function CourseBuilderPage({
           action={
             <Link
               href="/dashboard/courses"
-              className="inline-flex items-center justify-center rounded-full border border-slate-200 bg-card px-5 py-3 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
+              className="inline-flex items-center justify-center rounded-full border border-border bg-card px-5 py-3 text-sm font-semibold text-slate-700 transition hover:bg-muted/60"
             >
               Back to courses
             </Link>
@@ -105,7 +105,7 @@ export default async function CourseBuilderPage({
             </div>
 
             {modules.length === 0 ? (
-              <div className="mt-8 rounded-2xl border border-dashed border-slate-300 bg-slate-50/70 p-8 text-center">
+              <div className="mt-8 rounded-2xl border border-dashed border-border bg-muted/60 p-8 text-center">
                 <div className="mx-auto flex size-12 items-center justify-center rounded-2xl bg-card shadow-sm">
                   <BookOpen className="size-6 text-primary" />
                 </div>
@@ -124,7 +124,7 @@ export default async function CourseBuilderPage({
                 {modules.map((module) => (
                   <div
                     key={module.id}
-                    className="rounded-2xl border border-slate-200 bg-card p-5"
+                    className="rounded-2xl border border-border bg-card p-5"
                   >
                     <div className="flex items-center justify-between gap-4">
                       <h3 className="font-bold text-foreground">
@@ -141,7 +141,7 @@ export default async function CourseBuilderPage({
                         {module.lessons.map((lesson) => (
                           <div
                             key={lesson.id}
-                            className="rounded-xl bg-slate-50 px-4 py-3 text-sm text-slate-700"
+                            className="rounded-xl bg-muted/60 px-4 py-3 text-sm text-slate-700"
                           >
                             {lesson.position}. {lesson.title}
                           </div>

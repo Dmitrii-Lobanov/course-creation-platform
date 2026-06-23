@@ -32,7 +32,7 @@ export default function NewCoursePage() {
                 <h2 className="text-xl font-bold text-foreground">
                   Course details
                 </h2>
-                <p className="mt-2 text-sm leading-6 text-slate-600">
+                <p className="mt-2 text-sm leading-6 text-muted-foreground">
                   These fields define the first draft. You can refine them later
                   in the course builder.
                 </p>
@@ -55,7 +55,7 @@ export default function NewCoursePage() {
                   <h2 className="text-lg font-bold text-foreground">
                     What happens next?
                   </h2>
-                  <p className="mt-2 text-sm leading-6 text-slate-600">
+                  <p className="mt-2 text-sm leading-6 text-muted-foreground">
                     The course draft opens in the builder. The MVP will then add
                     modules, lessons, reordering, preview mode, publishing
                     checks, and student-facing course pages.
@@ -82,7 +82,7 @@ export default function NewCoursePage() {
                     ) : (
                       <Layers3 className="size-5 text-slate-400" />
                     )}
-                    <span className="text-sm text-slate-600">{item}</span>
+                    <span className="text-sm text-muted-foreground">{item}</span>
                   </div>
                 ))}
               </div>

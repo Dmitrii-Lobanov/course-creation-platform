@@ -4,7 +4,7 @@ type StatusPillProps = {
 };
 
 const toneClasses = {
-  neutral: "border-slate-200 bg-slate-50 text-slate-600",
+  neutral: "border-border bg-muted/60 text-muted-foreground",
   success: "border-emerald-200 bg-emerald-50 text-emerald-700",
   warning: "border-amber-200 bg-amber-50 text-amber-700",
   info: "border-indigo-200 bg-primary/10 text-indigo-700",
