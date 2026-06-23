@@ -129,7 +129,7 @@ export default async function DashboardCoursesPage() {
                 {draftCourses.map((course) => (
                   <Link
                     key={course.id}
-                    href={`/dashboard/courses/${course.id}/builder`}
+                    href={`/courses/${course.id}`}
                     className="grid grid-cols-[1.5fr_0.7fr_0.7fr_0.8fr] items-center gap-4 px-5 py-4 transition hover:bg-muted/50"
                   >
                     <div>
