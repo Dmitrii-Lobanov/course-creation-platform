@@ -96,6 +96,27 @@ export const lessons = pgTable("lessons", {
     .defaultNow(),
 });
 
+export const enrollments = pgTable("enrollments", {
+  id: uuid("id").defaultRandom().primaryKey(),
+
+  courseId: uuid("course_id")
+    .notNull()
+    .references(() => courses.id, {
+      onDelete: "cascade",
+    }),
+
+  // Temporary until real auth exists.
+  // Later this becomes userId.
+  studentId: varchar("student_id", { length: 120 }).notNull(),
+
+  createdAt: timestamp("created_at", {
+    withTimezone: true,
+  })
+    .notNull()
+    .defaultNow(),
+});
+
+
 export type Course = typeof courses.$inferSelect;
 export type NewCourse = typeof courses.$inferInsert;
 
@@ -104,3 +125,6 @@ export type NewCourseModule = typeof courseModules.$inferInsert;
 
 export type Lesson = typeof lessons.$inferSelect;
 export type NewLesson = typeof lessons.$inferInsert;
+
+export type Enrollment = typeof enrollments.$inferSelect;
+export type NewEnrollment = typeof enrollments.$inferInsert;
