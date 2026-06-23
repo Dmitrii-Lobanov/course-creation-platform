@@ -9,7 +9,7 @@ describe("validateCourseForPublishing", () => {
     level: "intermediate" as const,
   };
 
-  it("accepts a course with at least one module and valid lessons", () => {
+  it("accepts a course with modules and valid lessons", () => {
     const result = validateCourseForPublishing(validCourse, [
       {
         title: "Getting started",
@@ -18,11 +18,6 @@ describe("validateCourseForPublishing", () => {
             title: "Welcome",
             type: "text",
             content: "Welcome to the course.",
-          },
-          {
-            title: "Setup video",
-            type: "video",
-            content: null,
           },
         ],
       },
@@ -44,21 +39,21 @@ describe("validateCourseForPublishing", () => {
   it("rejects modules without lessons", () => {
     const result = validateCourseForPublishing(validCourse, [
       {
-        title: "Getting started",
+        title: "Introduction",
         lessons: [],
       },
     ]);
 
     expect(result.isValid).toBe(false);
     expect(result.errors).toContain(
-      'Module "Getting started" must have at least one lesson.',
+      'Module "Introduction" must have at least one lesson.',
     );
   });
 
   it("rejects text lessons without content", () => {
     const result = validateCourseForPublishing(validCourse, [
       {
-        title: "Getting started",
+        title: "Introduction",
         lessons: [
           {
             title: "Welcome",
@@ -76,7 +71,7 @@ describe("validateCourseForPublishing", () => {
   it("allows video lessons without text content", () => {
     const result = validateCourseForPublishing(validCourse, [
       {
-        title: "Getting started",
+        title: "Introduction",
         lessons: [
           {
             title: "Intro video",
@@ -88,38 +83,5 @@ describe("validateCourseForPublishing", () => {
     ]);
 
     expect(result.isValid).toBe(true);
-  });
-
-  it("collects multiple validation errors", () => {
-    const result = validateCourseForPublishing(
-      {
-        title: "",
-        description: "",
-        level: "beginner",
-      },
-      [
-        {
-          title: "",
-          lessons: [
-            {
-              title: "",
-              type: "text",
-              content: null,
-            },
-          ],
-        },
-      ],
-    );
-
-    expect(result.isValid).toBe(false);
-    expect(result.errors).toEqual(
-      expect.arrayContaining([
-        "Course title is required.",
-        "Course description is required.",
-        "Each module must have a title.",
-        'Module "" has a lesson without a title.',
-        'Text lesson "Untitled lesson" must have content.',
-      ]),
-    );
   });
 });

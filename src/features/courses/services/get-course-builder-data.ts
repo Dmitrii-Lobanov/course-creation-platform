@@ -38,6 +38,7 @@ export async function getCourseBuilderData(courseId: string) {
       moduleId: lessons.moduleId,
       title: lessons.title,
       type: lessons.type,
+      content: lessons.content,
       position: lessons.position,
     })
     .from(lessons)

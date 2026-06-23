@@ -1,16 +1,16 @@
-type PublishableCourse = {
+export type PublishableCourse = {
   title: string;
   description: string;
   level: "beginner" | "intermediate" | "advanced";
 };
 
-type PublishableLesson = {
+export type PublishableLesson = {
   title: string;
   type: "text" | "video";
-  content: string | null;
+  content?: string | null;
 };
 
-type PublishableModule = {
+export type PublishableModule = {
   title: string;
   lessons: PublishableLesson[];
 };

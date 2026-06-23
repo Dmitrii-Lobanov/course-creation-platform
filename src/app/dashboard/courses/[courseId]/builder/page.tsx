@@ -1,14 +1,16 @@
-import { BookOpen, Layers } from "lucide-react";
+import { BookOpen, CheckCircle2, Layers } from "lucide-react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
+import { CreateLessonForm } from "@/features/courses/components/create-lesson-form";
+import { CreateModuleForm } from "@/features/courses/components/create-module-form";
+import { PublishCourseForm } from "@/features/courses/components/publish-course-form";
 import { getCourseBuilderData } from "@/features/courses/services/get-course-builder-data";
+import { validateCourseForPublishing } from "@/features/courses/services/validate-course-for-publishing";
 import { AppShell } from "@/shared/ui/app-shell";
 import { PageHeader } from "@/shared/ui/page-header";
 import { SectionCard } from "@/shared/ui/section-card";
 import { StatusPill } from "@/shared/ui/status-pill";
-import { CreateModuleForm } from "@/features/courses/components/create-module-form";
-import { CreateLessonForm } from "@/features/courses/components/create-lesson-form";
 
 type CourseBuilderPageProps = {
   params: Promise<{
@@ -28,6 +30,17 @@ export default async function CourseBuilderPage({
   }
 
   const { course, modules } = builderData;
+  const isPublished = course.status === "published";
+  const isDraft = course.status === "draft";
+
+  const publishingValidation = validateCourseForPublishing(
+    {
+      title: course.title,
+      description: course.description,
+      level: course.level,
+    },
+    modules,
+  );
 
   return (
     <AppShell>
@@ -39,7 +52,7 @@ export default async function CourseBuilderPage({
           action={
             <Link
               href="/dashboard/courses"
-              className="inline-flex items-center justify-center rounded-full border border-border bg-card px-5 py-3 text-sm font-semibold text-slate-700 transition hover:bg-muted/60"
+              className="inline-flex items-center justify-center rounded-full border border-border bg-card px-5 py-3 text-sm font-semibold text-card-foreground transition hover:bg-accent hover:text-accent-foreground"
             >
               Back to courses
             </Link>
@@ -50,7 +63,9 @@ export default async function CourseBuilderPage({
           <SectionCard>
             <p className="text-sm font-medium text-muted-foreground">Status</p>
             <div className="mt-3">
-              <StatusPill tone="warning">{course.status}</StatusPill>
+              <StatusPill tone={isPublished ? "success" : "warning"}>
+                {course.status}
+              </StatusPill>
             </div>
           </SectionCard>
 
@@ -62,7 +77,9 @@ export default async function CourseBuilderPage({
           </SectionCard>
 
           <SectionCard>
-            <p className="text-sm font-medium text-muted-foreground">Modules</p>
+            <p className="text-sm font-medium text-muted-foreground">
+              Modules
+            </p>
             <p className="mt-3 text-3xl font-bold text-foreground">
               {modules.length}
             </p>
@@ -70,26 +87,70 @@ export default async function CourseBuilderPage({
         </section>
 
         <section className="mt-8 grid gap-6 lg:grid-cols-[0.8fr_1.2fr]">
-          <SectionCard>
-            <div className="flex items-start gap-4">
-              <div className="rounded-2xl bg-primary/10 p-3 text-primary">
-                <Layers className="size-5" />
+          <div className="space-y-6">
+            <SectionCard>
+              <div className="flex items-start gap-4">
+                <div className="rounded-2xl bg-primary/10 p-3 text-primary">
+                  <Layers className="size-5" />
+                </div>
+
+                <div>
+                  <h2 className="text-xl font-bold text-foreground">
+                    Course structure
+                  </h2>
+                  <p className="mt-2 text-sm leading-6 text-muted-foreground">
+                    Add modules first, then lessons inside each module. This
+                    keeps the builder predictable and prepares the publishing
+                    validation workflow.
+                  </p>
+                </div>
               </div>
 
+              {isDraft ? (
+                <CreateModuleForm courseId={course.id} />
+              ) : (
+                <div className="mt-6 rounded-2xl border border-border bg-muted/40 px-4 py-3 text-sm text-muted-foreground">
+                  Published courses cannot be edited in this MVP flow.
+                </div>
+              )}
+            </SectionCard>
+
+            <SectionCard>
               <div>
                 <h2 className="text-xl font-bold text-foreground">
-                  Course structure
+                  Publishing readiness
                 </h2>
+
                 <p className="mt-2 text-sm leading-6 text-muted-foreground">
-                  Add modules first, then lessons inside each module. This keeps
-                  the builder predictable and prepares the publishing validation
-                  workflow.
+                  Validate the course structure before making it visible in the
+                  catalog.
                 </p>
               </div>
-            </div>
 
-            <CreateModuleForm courseId={course.id} />
-          </SectionCard>
+              <div className="mt-5 space-y-3">
+                {publishingValidation.errors.length === 0 ? (
+                  <div className="flex items-center gap-3 rounded-2xl border border-emerald-500/20 bg-emerald-500/10 px-4 py-3 text-sm text-emerald-500">
+                    <CheckCircle2 className="size-4" />
+                    Course is ready to publish.
+                  </div>
+                ) : (
+                  publishingValidation.errors.map((error) => (
+                    <div
+                      key={error}
+                      className="rounded-2xl border border-border bg-muted/40 px-4 py-3 text-sm text-muted-foreground"
+                    >
+                      {error}
+                    </div>
+                  ))
+                )}
+              </div>
+
+              <PublishCourseForm
+                courseId={course.id}
+                isPublished={isPublished}
+              />
+            </SectionCard>
+          </div>
 
           <SectionCard>
             <div className="flex items-start justify-between gap-4">
@@ -106,9 +167,9 @@ export default async function CourseBuilderPage({
             </div>
 
             {modules.length === 0 ? (
-              <div className="mt-8 rounded-2xl border border-dashed border-border bg-muted/60 p-8 text-center">
-                <div className="mx-auto flex size-12 items-center justify-center rounded-2xl bg-card shadow-sm">
-                  <BookOpen className="size-6 text-primary" />
+              <div className="mt-8 rounded-2xl border border-dashed border-border bg-muted/50 p-8 text-center">
+                <div className="mx-auto flex size-12 items-center justify-center rounded-2xl bg-primary/10 text-primary shadow-sm">
+                  <BookOpen className="size-6" />
                 </div>
 
                 <h3 className="mt-4 text-lg font-bold text-foreground">
@@ -116,8 +177,8 @@ export default async function CourseBuilderPage({
                 </h3>
 
                 <p className="mx-auto mt-2 max-w-md text-sm leading-6 text-muted-foreground">
-                  The next step is adding a server action that creates the first
-                  module for this draft course.
+                  Add the first module to start building the course structure.
+                  Lessons will be created inside modules.
                 </p>
               </div>
             ) : (
@@ -158,7 +219,9 @@ export default async function CourseBuilderPage({
                       </div>
                     ) : null}
 
-                    <CreateLessonForm moduleId={module.id} />
+                    {isDraft ? (
+                      <CreateLessonForm moduleId={module.id} />
+                    ) : null}
                   </div>
                 ))}
               </div>

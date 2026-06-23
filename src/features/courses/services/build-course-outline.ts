@@ -9,6 +9,7 @@ export type CourseOutlineLessonInput = {
   moduleId: string;
   title: string;
   type: "text" | "video";
+  content?: string | null;
   position: number;
 };
 
