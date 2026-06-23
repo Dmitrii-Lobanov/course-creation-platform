@@ -18,17 +18,17 @@ export default function CoursesPage() {
         <section className="mt-10 grid gap-6 lg:grid-cols-[0.8fr_1.2fr]">
           <SectionCard>
             <div className="flex items-start gap-4">
-              <div className="rounded-2xl bg-indigo-50 p-3 text-indigo-600">
+              <div className="rounded-2xl bg-primary/10 p-3 text-primary">
                 <Search className="size-5" />
               </div>
 
               <div>
-                <h2 className="text-xl font-bold text-slate-950">
+                <h2 className="text-xl font-bold text-foreground">
                   Search and filters coming next
                 </h2>
                 <p className="mt-2 text-sm leading-6 text-slate-600">
-                  Published courses will be searchable by title, level, category,
-                  and enrollment status.
+                  Published courses will be searchable by title, level,
+                  category, and enrollment status.
                 </p>
               </div>
             </div>
@@ -37,7 +37,7 @@ export default function CoursesPage() {
           <SectionCard>
             <div className="flex items-start justify-between gap-4">
               <div>
-                <h2 className="text-xl font-bold text-slate-950">
+                <h2 className="text-xl font-bold text-foreground">
                   No published courses yet
                 </h2>
                 <p className="mt-2 max-w-xl text-sm leading-6 text-slate-600">
@@ -50,11 +50,11 @@ export default function CoursesPage() {
             </div>
 
             <div className="mt-8 rounded-2xl border border-dashed border-slate-300 bg-slate-50/70 p-8 text-center">
-              <div className="mx-auto flex size-12 items-center justify-center rounded-2xl bg-white shadow-sm">
-                <BookOpen className="size-6 text-indigo-600" />
+              <div className="mx-auto flex size-12 items-center justify-center rounded-2xl bg-card shadow-sm">
+                <BookOpen className="size-6 text-primary" />
               </div>
 
-              <h3 className="mt-4 text-lg font-bold text-slate-950">
+              <h3 className="mt-4 text-lg font-bold text-foreground">
                 Catalog is ready for real data
               </h3>
 

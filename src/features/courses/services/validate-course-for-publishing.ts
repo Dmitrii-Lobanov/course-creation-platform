@@ -48,7 +48,9 @@ export function validateCourseForPublishing(
     }
 
     if (module.lessons.length === 0) {
-      errors.push(`Module "${module.title || "Untitled module"}" must have at least one lesson.`);
+      errors.push(
+        `Module "${module.title || "Untitled module"}" must have at least one lesson.`,
+      );
     }
 
     module.lessons.forEach((lesson) => {
@@ -57,7 +59,9 @@ export function validateCourseForPublishing(
       }
 
       if (lesson.type === "text" && !lesson.content?.trim()) {
-        errors.push(`Text lesson "${lesson.title || "Untitled lesson"}" must have content.`);
+        errors.push(
+          `Text lesson "${lesson.title || "Untitled lesson"}" must have content.`,
+        );
       }
     });
   });

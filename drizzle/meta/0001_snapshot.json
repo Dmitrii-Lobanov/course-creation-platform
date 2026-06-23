@@ -54,12 +54,8 @@
           "name": "course_modules_course_id_courses_id_fk",
           "tableFrom": "course_modules",
           "tableTo": "courses",
-          "columnsFrom": [
-            "course_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["course_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -195,12 +191,8 @@
           "name": "lessons_module_id_course_modules_id_fk",
           "tableFrom": "lessons",
           "tableTo": "course_modules",
-          "columnsFrom": [
-            "module_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["module_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -216,28 +208,17 @@
     "public.course_level": {
       "name": "course_level",
       "schema": "public",
-      "values": [
-        "beginner",
-        "intermediate",
-        "advanced"
-      ]
+      "values": ["beginner", "intermediate", "advanced"]
     },
     "public.course_status": {
       "name": "course_status",
       "schema": "public",
-      "values": [
-        "draft",
-        "published",
-        "archived"
-      ]
+      "values": ["draft", "published", "archived"]
     },
     "public.lesson_type": {
       "name": "lesson_type",
       "schema": "public",
-      "values": [
-        "text",
-        "video"
-      ]
+      "values": ["text", "video"]
     }
   },
   "schemas": {},

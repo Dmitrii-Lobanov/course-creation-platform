@@ -44,7 +44,7 @@ export default async function DashboardCoursesPage() {
           action={
             <Link
               href="/dashboard/courses/new"
-              className="inline-flex items-center gap-2 rounded-full bg-slate-950 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-slate-950/15 transition hover:bg-slate-800"
+              className="inline-flex items-center gap-2 rounded-full bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground shadow-lg transition hover:opacity-90"
             >
               <Plus className="size-4" />
               Create course
@@ -54,31 +54,37 @@ export default async function DashboardCoursesPage() {
 
         <section className="mt-10 grid gap-6 md:grid-cols-3">
           <SectionCard>
-            <p className="text-sm font-medium text-slate-500">Draft courses</p>
-            <p className="mt-3 text-3xl font-bold text-slate-950">
+            <p className="text-sm font-medium text-muted-foreground">
+              Draft courses
+            </p>
+            <p className="mt-3 text-3xl font-bold text-foreground">
               {draftCourses.length}
             </p>
           </SectionCard>
 
           <SectionCard>
-            <p className="text-sm font-medium text-slate-500">Published</p>
-            <p className="mt-3 text-3xl font-bold text-slate-950">0</p>
+            <p className="text-sm font-medium text-muted-foreground">
+              Published
+            </p>
+            <p className="mt-3 text-3xl font-bold text-foreground">0</p>
           </SectionCard>
 
           <SectionCard>
-            <p className="text-sm font-medium text-slate-500">Archived</p>
-            <p className="mt-3 text-3xl font-bold text-slate-950">0</p>
+            <p className="text-sm font-medium text-muted-foreground">
+              Archived
+            </p>
+            <p className="mt-3 text-3xl font-bold text-foreground">0</p>
           </SectionCard>
         </section>
 
         <SectionCard className="mt-8">
           <div className="flex items-start justify-between gap-4">
             <div>
-              <h2 className="text-xl font-bold text-slate-950">
+              <h2 className="text-xl font-bold text-foreground">
                 Draft courses
               </h2>
 
-              <p className="mt-2 max-w-xl text-sm leading-6 text-slate-600">
+              <p className="mt-2 max-w-xl text-sm leading-6 text-muted-foreground">
                 These courses are stored in Postgres and loaded with Drizzle on
                 the server.
               </p>
@@ -88,16 +94,16 @@ export default async function DashboardCoursesPage() {
           </div>
 
           {draftCourses.length === 0 ? (
-            <div className="mt-8 rounded-2xl border border-dashed border-slate-300 bg-slate-50/70 p-8 text-center">
-              <div className="mx-auto flex size-12 items-center justify-center rounded-2xl bg-white shadow-sm">
-                <BookOpen className="size-6 text-indigo-600" />
+            <div className="mt-8 rounded-2xl border border-dashed border-border bg-muted/50 p-8 text-center">
+              <div className="mx-auto flex size-12 items-center justify-center rounded-2xl bg-card text-primary shadow-sm">
+                <BookOpen className="size-6" />
               </div>
 
-              <h3 className="mt-4 text-lg font-bold text-slate-950">
+              <h3 className="mt-4 text-lg font-bold text-foreground">
                 No course drafts yet
               </h3>
 
-              <p className="mx-auto mt-2 max-w-md text-sm leading-6 text-slate-600">
+              <p className="mx-auto mt-2 max-w-md text-sm leading-6 text-muted-foreground">
                 Create the first course draft, then continue into the builder
                 workflow for modules, lessons, preview mode, and publishing
                 validation.
@@ -105,37 +111,37 @@ export default async function DashboardCoursesPage() {
 
               <Link
                 href="/dashboard/courses/new"
-                className="mt-5 inline-flex items-center justify-center rounded-full bg-slate-950 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-slate-800"
+                className="mt-5 inline-flex items-center justify-center rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground transition hover:opacity-90"
               >
                 Create course draft
               </Link>
             </div>
           ) : (
-            <div className="mt-8 overflow-hidden rounded-2xl border border-slate-200">
-              <div className="grid grid-cols-[1.5fr_0.7fr_0.7fr_0.8fr] bg-slate-50 px-5 py-3 text-xs font-semibold uppercase tracking-wide text-slate-500">
+            <div className="mt-8 overflow-hidden rounded-2xl border border-border bg-card/60">
+              <div className="grid grid-cols-[1.5fr_0.7fr_0.7fr_0.8fr] bg-muted/70 px-5 py-3 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
                 <span>Course</span>
                 <span>Level</span>
                 <span>Status</span>
                 <span>Updated</span>
               </div>
 
-              <div className="divide-y divide-slate-200">
+              <div className="divide-y divide-border">
                 {draftCourses.map((course) => (
                   <Link
                     key={course.id}
                     href={`/dashboard/courses/${course.id}/builder`}
-                    className="grid grid-cols-[1.5fr_0.7fr_0.7fr_0.8fr] items-center gap-4 px-5 py-4 transition hover:bg-slate-50"
+                    className="grid grid-cols-[1.5fr_0.7fr_0.7fr_0.8fr] items-center gap-4 px-5 py-4 transition hover:bg-muted/50"
                   >
                     <div>
-                      <h3 className="font-semibold text-slate-950">
+                      <h3 className="font-semibold text-foreground">
                         {course.title}
                       </h3>
-                      <p className="mt-1 line-clamp-1 text-sm text-slate-600">
+                      <p className="mt-1 line-clamp-1 text-sm text-muted-foreground">
                         {course.description}
                       </p>
                     </div>
 
-                    <span className="text-sm capitalize text-slate-700">
+                    <span className="text-sm capitalize text-muted-foreground">
                       {course.level}
                     </span>
 
@@ -143,7 +149,7 @@ export default async function DashboardCoursesPage() {
                       <StatusPill tone="warning">{course.status}</StatusPill>
                     </span>
 
-                    <span className="inline-flex items-center gap-2 text-sm text-slate-500">
+                    <span className="inline-flex items-center gap-2 text-sm text-muted-foreground">
                       <Clock className="size-4" />
                       {formatDate(course.updatedAt)}
                     </span>

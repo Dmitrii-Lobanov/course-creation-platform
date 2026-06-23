@@ -13,7 +13,7 @@ export default function NewCoursePage() {
       <main className="mx-auto max-w-7xl px-6 py-10">
         <Link
           href="/dashboard"
-          className="mb-8 inline-flex items-center gap-2 text-sm font-medium text-slate-500 transition hover:text-slate-950"
+          className="mb-8 inline-flex items-center gap-2 text-sm font-medium text-muted-foreground transition hover:text-foreground"
         >
           <ArrowLeft className="size-4" />
           Back to dashboard
@@ -29,7 +29,7 @@ export default function NewCoursePage() {
           <SectionCard>
             <div className="mb-6 flex items-start justify-between gap-4">
               <div>
-                <h2 className="text-xl font-bold text-slate-950">
+                <h2 className="text-xl font-bold text-foreground">
                   Course details
                 </h2>
                 <p className="mt-2 text-sm leading-6 text-slate-600">
@@ -47,12 +47,12 @@ export default function NewCoursePage() {
           <div className="space-y-6">
             <SectionCard>
               <div className="flex items-start gap-4">
-                <div className="rounded-2xl bg-indigo-50 p-3 text-indigo-600">
+                <div className="rounded-2xl bg-primary/10 p-3 text-primary">
                   <Rocket className="size-5" />
                 </div>
 
                 <div>
-                  <h2 className="text-lg font-bold text-slate-950">
+                  <h2 className="text-lg font-bold text-foreground">
                     What happens next?
                   </h2>
                   <p className="mt-2 text-sm leading-6 text-slate-600">
@@ -65,7 +65,7 @@ export default function NewCoursePage() {
             </SectionCard>
 
             <SectionCard>
-              <h2 className="text-lg font-bold text-slate-950">
+              <h2 className="text-lg font-bold text-foreground">
                 Publishing readiness
               </h2>
 

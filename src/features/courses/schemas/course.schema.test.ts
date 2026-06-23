@@ -6,7 +6,8 @@ describe("createCourseSchema", () => {
   it("accepts valid course draft input", () => {
     const result = createCourseSchema.safeParse({
       title: "React Performance Masterclass",
-      description: "A practical course about optimizing real React applications.",
+      description:
+        "A practical course about optimizing real React applications.",
       level: "intermediate",
     });
 

@@ -2,10 +2,8 @@
 
 import { redirect } from "next/navigation";
 
-import { db } from "@/db/client";
-import { courses } from "@/db/schema";
-
 import { createCourseSchema } from "../schemas/course.schema";
+import { createCourseDraft } from "../services/create-course-draft";
 
 export type CreateCourseActionState = {
   errors?: {
@@ -35,26 +33,7 @@ export async function createCourseAction(
   let courseId: string;
 
   try {
-    const [createdCourse] = await db
-      .insert(courses)
-      .values({
-        title: parsed.data.title,
-        description: parsed.data.description,
-        level: parsed.data.level,
-        status: "draft",
-      })
-      .returning({
-        id: courses.id,
-      });
-
-    if (!createdCourse) {
-      return {
-        errors: {
-          form: ["Course could not be created."],
-        },
-      };
-    }
-
+    const createdCourse = await createCourseDraft(parsed.data);
     courseId = createdCourse.id;
   } catch {
     return {

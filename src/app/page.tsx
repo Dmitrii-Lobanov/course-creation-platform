@@ -38,17 +38,17 @@ export default function HomePage() {
       <main className="mx-auto max-w-7xl px-6 py-16 md:py-24">
         <section className="grid gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
           <div className="space-y-8">
-            <div className="inline-flex items-center gap-2 rounded-full border border-indigo-200 bg-white/80 px-4 py-2 text-sm font-medium text-indigo-700 shadow-sm">
+            <div className="inline-flex items-center gap-2 rounded-full border border-border bg-card/80 px-4 py-2 text-sm font-medium text-primary shadow-sm">
               <Sparkles className="size-4" />
               Production-style course creation platform
             </div>
 
             <div className="space-y-6">
-              <h1 className="max-w-4xl text-5xl font-bold tracking-tight text-slate-950 md:text-7xl">
+              <h1 className="max-w-4xl text-5xl font-bold tracking-tight text-foreground md:text-7xl">
                 Build courses like a product team.
               </h1>
 
-              <p className="max-w-2xl text-xl leading-9 text-slate-600">
+              <p className="max-w-2xl text-xl leading-9 text-muted-foreground">
                 CourseForge helps instructors create structured courses,
                 validate publishing readiness, track student progress, and
                 manage learning workflows from one polished workspace.
@@ -58,7 +58,7 @@ export default function HomePage() {
             <div className="flex flex-col gap-3 sm:flex-row">
               <Link
                 href="/dashboard"
-                className="inline-flex items-center justify-center gap-2 rounded-full bg-slate-950 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-slate-950/15 transition hover:bg-slate-800"
+                className="inline-flex items-center justify-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground shadow-lg transition hover:opacity-90"
               >
                 Open dashboard
                 <ArrowRight className="size-4" />
@@ -66,7 +66,7 @@ export default function HomePage() {
 
               <Link
                 href="/courses"
-                className="inline-flex items-center justify-center rounded-full border border-slate-200 bg-white px-6 py-3 text-sm font-semibold text-slate-700 shadow-sm transition hover:bg-slate-50"
+                className="inline-flex items-center justify-center rounded-full border border-border bg-card px-6 py-3 text-sm font-semibold text-card-foreground shadow-sm transition hover:bg-accent hover:text-accent-foreground"
               >
                 Browse catalog
               </Link>
@@ -74,15 +74,15 @@ export default function HomePage() {
           </div>
 
           <SectionCard className="relative overflow-hidden">
-            <div className="absolute right-0 top-0 h-40 w-40 rounded-full bg-indigo-200/50 blur-3xl" />
+            <div className="absolute right-0 top-0 h-40 w-40 rounded-full bg-primary/20 blur-3xl" />
 
             <div className="relative space-y-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm font-medium text-slate-500">
+                  <p className="text-sm font-medium text-muted-foreground">
                     Course Builder
                   </p>
-                  <h2 className="mt-1 text-2xl font-bold text-slate-950">
+                  <h2 className="mt-1 text-2xl font-bold text-foreground">
                     Advanced React Systems
                   </h2>
                 </div>
@@ -98,13 +98,13 @@ export default function HomePage() {
                 ].map((module, index) => (
                   <div
                     key={module}
-                    className="rounded-2xl border border-slate-200 bg-slate-50/80 p-4"
+                    className="rounded-2xl border border-border bg-muted/70 p-4"
                   >
                     <div className="flex items-center justify-between">
-                      <p className="font-semibold text-slate-800">
+                      <p className="font-semibold text-foreground">
                         Module {index + 1}: {module}
                       </p>
-                      <span className="text-xs text-slate-500">
+                      <span className="text-xs text-muted-foreground">
                         {index + 2} lessons
                       </span>
                     </div>
@@ -112,8 +112,10 @@ export default function HomePage() {
                 ))}
               </div>
 
-              <div className="rounded-2xl bg-slate-950 p-5 text-white">
-                <p className="text-sm text-slate-300">Publishing readiness</p>
+              <div className="rounded-2xl border border-border bg-background/80 p-5 text-foreground">
+                <p className="text-sm text-muted-foreground">
+                  Publishing readiness
+                </p>
                 <div className="mt-4 grid gap-3">
                   {[
                     "Course details",
@@ -138,17 +140,17 @@ export default function HomePage() {
             return (
               <div
                 key={feature.title}
-                className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm"
+                className="rounded-3xl border border-border bg-card p-6 text-card-foreground shadow-sm"
               >
-                <div className="mb-5 flex size-11 items-center justify-center rounded-2xl bg-indigo-50 text-indigo-600">
+                <div className="mb-5 flex size-11 items-center justify-center rounded-2xl bg-primary/10 text-primary">
                   <Icon className="size-5" />
                 </div>
 
-                <h3 className="text-lg font-bold text-slate-950">
+                <h3 className="text-lg font-bold text-foreground">
                   {feature.title}
                 </h3>
 
-                <p className="mt-3 leading-7 text-slate-600">
+                <p className="mt-3 leading-7 text-muted-foreground">
                   {feature.description}
                 </p>
               </div>

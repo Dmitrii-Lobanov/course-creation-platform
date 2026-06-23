@@ -95,15 +95,15 @@ export default async function DashboardPage() {
           <SectionCard>
             <div className="flex items-start justify-between gap-4">
               <div>
-                <p className="text-sm font-semibold uppercase tracking-[0.18em] text-slate-500">
+                <p className="text-sm font-semibold uppercase tracking-[0.18em] text-muted-foreground">
                   Recent courses
                 </p>
-                <h2 className="mt-3 text-2xl font-bold text-slate-950">
+                <h2 className="mt-3 text-2xl font-bold text-foreground">
                   {recentCourses.length > 0
                     ? "Recently updated courses"
                     : "No courses yet"}
                 </h2>
-                <p className="mt-2 max-w-xl leading-7 text-slate-600">
+                <p className="mt-2 max-w-xl leading-7 text-muted-foreground">
                   {recentCourses.length > 0
                     ? "Continue editing your latest drafts and prepare them for publishing."
                     : "Start with a course draft. The next milestones will add modules, lessons, publishing validation, enrollment, progress tracking, and analytics."}
@@ -114,16 +114,16 @@ export default async function DashboardPage() {
             </div>
 
             {recentCourses.length === 0 ? (
-              <div className="mt-8 rounded-2xl border border-dashed border-slate-300 bg-slate-50/70 p-8 text-center">
-                <div className="mx-auto flex size-12 items-center justify-center rounded-2xl bg-white shadow-sm">
-                  <BookOpen className="size-6 text-indigo-600" />
+              <div className="mt-8 rounded-2xl border border-dashed border-border bg-muted/70 p-8 text-center">
+                <div className="mx-auto flex size-12 items-center justify-center rounded-2xl bg-card shadow-sm">
+                  <BookOpen className="size-6 text-primary" />
                 </div>
 
-                <h3 className="mt-4 text-lg font-bold text-slate-950">
+                <h3 className="mt-4 text-lg font-bold text-foreground">
                   Create your first course draft
                 </h3>
 
-                <p className="mx-auto mt-2 max-w-md text-sm leading-6 text-slate-600">
+                <p className="mx-auto mt-2 max-w-md text-sm leading-6 text-muted-foreground">
                   Define the core course details now. Modules, lessons, preview
                   mode, and publishing checks will be added inside the builder
                   workflow.
@@ -142,14 +142,14 @@ export default async function DashboardPage() {
                   <Link
                     key={course.id}
                     href={`/dashboard/courses/${course.id}/builder`}
-                    className="block rounded-2xl border border-slate-200 bg-white p-5 transition hover:border-indigo-200 hover:bg-indigo-50/30"
+                    className="block rounded-2xl border border-border bg-card p-5 transition hover:border-indigo-200 hover:bg-primary/10"
                   >
                     <div className="flex items-start justify-between gap-4">
                       <div>
-                        <h3 className="font-bold text-slate-950">
+                        <h3 className="font-bold text-foreground">
                           {course.title}
                         </h3>
-                        <p className="mt-1 line-clamp-1 text-sm text-slate-600">
+                        <p className="mt-1 line-clamp-1 text-sm text-muted-foreground">
                           {course.description}
                         </p>
                       </div>
@@ -161,7 +161,7 @@ export default async function DashboardPage() {
                       </StatusPill>
                     </div>
 
-                    <div className="mt-4 flex flex-wrap items-center gap-3 text-sm text-slate-500">
+                    <div className="mt-4 flex flex-wrap items-center gap-3 text-sm text-muted-foreground">
                       <span className="capitalize">{course.level}</span>
                       <span>•</span>
                       <span>Updated {formatDate(course.updatedAt)}</span>
@@ -173,7 +173,7 @@ export default async function DashboardPage() {
           </SectionCard>
 
           <SectionCard>
-            <p className="text-sm font-semibold uppercase tracking-[0.18em] text-slate-500">
+            <p className="text-sm font-semibold uppercase tracking-[0.18em] text-muted-foreground">
               Product workflow
             </p>
 
@@ -185,12 +185,12 @@ export default async function DashboardPage() {
                 ["4", "Track progress", "Measure enrollments and completion."],
               ].map(([step, title, description]) => (
                 <div key={step} className="flex gap-4">
-                  <div className="flex size-9 shrink-0 items-center justify-center rounded-full bg-indigo-50 text-sm font-bold text-indigo-700">
+                  <div className="flex size-9 shrink-0 items-center justify-center rounded-full bg-primary/10 text-sm font-bold text-indigo-700">
                     {step}
                   </div>
                   <div>
-                    <p className="font-semibold text-slate-950">{title}</p>
-                    <p className="mt-1 text-sm leading-6 text-slate-600">
+                    <p className="font-semibold text-foreground">{title}</p>
+                    <p className="mt-1 text-sm leading-6 text-muted-foreground">
                       {description}
                     </p>
                   </div>

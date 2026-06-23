@@ -41,7 +41,7 @@ export function CreateCourseForm() {
           name="title"
           type="text"
           placeholder="Advanced React Performance"
-          className="h-12 w-full rounded-2xl border border-slate-200 bg-white px-4 text-sm text-slate-950 shadow-sm outline-none transition placeholder:text-slate-400 focus:border-indigo-300 focus:ring-4 focus:ring-indigo-100"
+          className="h-12 w-full rounded-2xl border border-slate-200 bg-card px-4 text-sm text-foreground shadow-sm outline-none transition placeholder:text-slate-400 focus:border-indigo-300 focus:ring-4 focus:ring-indigo-100"
         />
 
         {state.errors?.title ? (
@@ -49,7 +49,7 @@ export function CreateCourseForm() {
             {state.errors.title[0]}
           </p>
         ) : (
-          <p className="text-xs text-slate-500">
+          <p className="text-xs text-muted-foreground">
             Use a specific title that clearly communicates the learning outcome.
           </p>
         )}
@@ -68,7 +68,7 @@ export function CreateCourseForm() {
           name="description"
           placeholder="Describe what students will learn, who the course is for, and what outcome they can expect."
           rows={6}
-          className="w-full resize-none rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm leading-6 text-slate-950 shadow-sm outline-none transition placeholder:text-slate-400 focus:border-indigo-300 focus:ring-4 focus:ring-indigo-100"
+          className="w-full resize-none rounded-2xl border border-slate-200 bg-card px-4 py-3 text-sm leading-6 text-foreground shadow-sm outline-none transition placeholder:text-slate-400 focus:border-indigo-300 focus:ring-4 focus:ring-indigo-100"
         />
 
         {state.errors?.description ? (
@@ -76,7 +76,7 @@ export function CreateCourseForm() {
             {state.errors.description[0]}
           </p>
         ) : (
-          <p className="text-xs text-slate-500">
+          <p className="text-xs text-muted-foreground">
             This will later appear on the public course landing page.
           </p>
         )}
@@ -91,7 +91,7 @@ export function CreateCourseForm() {
           id="level"
           name="level"
           defaultValue=""
-          className="h-12 w-full rounded-2xl border border-slate-200 bg-white px-4 text-sm text-slate-950 shadow-sm outline-none transition focus:border-indigo-300 focus:ring-4 focus:ring-indigo-100"
+          className="h-12 w-full rounded-2xl border border-slate-200 bg-card px-4 text-sm text-foreground shadow-sm outline-none transition focus:border-indigo-300 focus:ring-4 focus:ring-indigo-100"
         >
           <option value="" disabled>
             Select course level
@@ -106,7 +106,7 @@ export function CreateCourseForm() {
             {state.errors.level[0]}
           </p>
         ) : (
-          <p className="text-xs text-slate-500">
+          <p className="text-xs text-muted-foreground">
             Level helps students understand whether the course fits their
             current knowledge.
           </p>
@@ -120,7 +120,7 @@ export function CreateCourseForm() {
       ) : null}
 
       <div className="flex flex-col gap-3 border-t border-slate-200 pt-6 sm:flex-row sm:items-center sm:justify-between">
-        <p className="text-sm text-slate-500">
+        <p className="text-sm text-muted-foreground">
           You can edit these details later in the builder.
         </p>
 

@@ -11,12 +11,14 @@ export default defineConfig({
     environment: "node",
     globals: false,
     include: ["src/**/*.test.ts"],
+    exclude: ["src/**/*.integration.test.ts"],
     coverage: {
       provider: "v8",
       reporter: ["text", "html"],
       include: ["src/**/*.{ts,tsx}"],
       exclude: [
         "src/**/*.test.ts",
+        "src/**/*.integration.test.ts",
         "src/**/*.tsx",
         "src/app/**",
         "src/shared/ui/**",
