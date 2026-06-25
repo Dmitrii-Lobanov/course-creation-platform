@@ -1,4 +1,5 @@
 import {
+  boolean,
   integer,
   pgEnum,
   pgTable,
@@ -116,6 +117,42 @@ export const enrollments = pgTable("enrollments", {
     .defaultNow(),
 });
 
+export const lessonProgress = pgTable("lesson_progress", {
+  id: uuid("id").defaultRandom().primaryKey(),
+
+  lessonId: uuid("lesson_id")
+    .notNull()
+    .references(() => lessons.id, {
+      onDelete: "cascade",
+    }),
+
+  courseId: uuid("course_id")
+    .notNull()
+    .references(() => courses.id, {
+      onDelete: "cascade",
+    }),
+
+  studentId: varchar("student_id", { length: 120 }).notNull(),
+
+  completed: boolean("completed").notNull().default(false),
+
+  completedAt: timestamp("completed_at", {
+    withTimezone: true,
+  }),
+
+  createdAt: timestamp("created_at", {
+    withTimezone: true,
+  })
+    .notNull()
+    .defaultNow(),
+
+  updatedAt: timestamp("updated_at", {
+    withTimezone: true,
+  })
+    .notNull()
+    .defaultNow(),
+});
+
 export type Course = typeof courses.$inferSelect;
 export type NewCourse = typeof courses.$inferInsert;
 
@@ -127,3 +164,6 @@ export type NewLesson = typeof lessons.$inferInsert;
 
 export type Enrollment = typeof enrollments.$inferSelect;
 export type NewEnrollment = typeof enrollments.$inferInsert;
+
+export type LessonProgress = typeof lessonProgress.$inferSelect;
+export type NewLessonProgress = typeof lessonProgress.$inferInsert;
