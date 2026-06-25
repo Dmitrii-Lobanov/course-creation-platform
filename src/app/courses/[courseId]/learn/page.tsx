@@ -272,14 +272,16 @@ export default async function CoursePlayerPage({
                     ) : null}
                   </div>
 
-                  <div className="mt-8 flex justify-end">
-                    <MarkLessonCompletedForm
-                      courseId={course.id}
-                      lessonId={currentLesson.id}
-                      isCompleted={currentLessonCompleted}
-                      nextLessonId={nextLesson?.id}
-                    />
-                  </div>
+                  {!courseCompleted ? (
+                    <div className="mt-8 flex justify-end">
+                      <MarkLessonCompletedForm
+                        courseId={course.id}
+                        lessonId={currentLesson.id}
+                        isCompleted={currentLessonCompleted}
+                        nextLessonId={nextLesson?.id}
+                      />
+                    </div>
+                  ) : null}
                 </>
               ) : (
                 <div className="rounded-2xl border border-dashed border-border bg-muted/50 p-8 text-center">
