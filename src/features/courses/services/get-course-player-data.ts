@@ -1,7 +1,7 @@
-import { and, eq } from "drizzle-orm";
+import { and, eq, inArray } from "drizzle-orm";
 
 import { db } from "@/db/client";
-import { enrollments } from "@/db/schema";
+import { enrollments, lessonProgress } from "@/db/schema";
 
 import { getPublishedCourseDetail } from "./get-published-course-detail";
 
@@ -48,12 +48,47 @@ export async function getCoursePlayerData({
     ? allLessons.find((lesson) => lesson.id === lessonId)
     : null;
 
+  if (selectedLesson) {
+    return {
+      enrollment,
+      course: courseDetail.course,
+      modules: courseDetail.modules,
+      currentLesson: selectedLesson,
+    };
+  }
+
+  const lessonIds = allLessons.map((lesson) => lesson.id);
+
+  const completedRows =
+    lessonIds.length > 0
+      ? await db
+          .select({
+            lessonId: lessonProgress.lessonId,
+          })
+          .from(lessonProgress)
+          .where(
+            and(
+              eq(lessonProgress.courseId, courseId),
+              eq(lessonProgress.studentId, studentId),
+              eq(lessonProgress.completed, true),
+              inArray(lessonProgress.lessonId, lessonIds),
+            ),
+          )
+      : [];
+
+  const completedLessonIds = new Set(
+    completedRows.map((row) => row.lessonId),
+  );
+
+  const firstIncompleteLesson =
+    allLessons.find((lesson) => !completedLessonIds.has(lesson.id)) ?? null;
+
   const firstLesson = allLessons[0] ?? null;
 
   return {
     enrollment,
     course: courseDetail.course,
     modules: courseDetail.modules,
-    currentLesson: selectedLesson ?? firstLesson,
+    currentLesson: firstIncompleteLesson ?? firstLesson,
   };
 }
