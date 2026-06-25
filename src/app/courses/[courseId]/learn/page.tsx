@@ -245,6 +245,7 @@ export default async function CoursePlayerPage({
                       courseId={course.id}
                       lessonId={currentLesson.id}
                       isCompleted={currentLessonCompleted}
+                      nextLessonId={nextLesson?.id}
                     />
                   </div>
                 </>

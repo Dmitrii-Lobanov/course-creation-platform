@@ -1,6 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 
 import { markLessonCompleted } from "../services/mark-lesson-completed";
 
@@ -17,6 +18,7 @@ export async function markLessonCompletedAction(
 ): Promise<MarkLessonCompletedActionState> {
   const courseId = formData.get("courseId");
   const lessonId = formData.get("lessonId");
+  const nextLessonId = formData.get("nextLessonId");
 
   if (typeof courseId !== "string" || typeof lessonId !== "string") {
     return {
@@ -38,6 +40,10 @@ export async function markLessonCompletedAction(
 
   revalidatePath(`/courses/${courseId}/learn`);
   revalidatePath("/my-learning");
+
+  if (typeof nextLessonId === "string" && nextLessonId.length > 0) {
+    redirect(`/courses/${courseId}/learn?lessonId=${nextLessonId}`);
+  }
 
   return {
     success: true,
