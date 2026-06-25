@@ -12,6 +12,7 @@ const navItems = [
   { href: "/dashboard/courses", label: "My courses" },
   { href: "/dashboard/courses/new", label: "Create" },
   { href: "/courses", label: "Catalog" },
+  { href: "/my-learning", label: "My learning" },
 ];
 
 export function AppShell({ children }: AppShellProps) {
