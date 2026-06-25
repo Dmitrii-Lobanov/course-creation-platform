@@ -8,11 +8,13 @@ import { getPublishedCourseDetail } from "./get-published-course-detail";
 type GetCoursePlayerDataInput = {
   courseId: string;
   studentId: string;
+  lessonId?: string;
 };
 
 export async function getCoursePlayerData({
   courseId,
   studentId,
+  lessonId,
 }: GetCoursePlayerDataInput) {
   const [enrollment] = await db
     .select({
@@ -40,13 +42,18 @@ export async function getCoursePlayerData({
     return null;
   }
 
-  const firstModule = courseDetail.modules[0];
-  const firstLesson = firstModule?.lessons[0] ?? null;
+  const allLessons = courseDetail.modules.flatMap((module) => module.lessons);
+
+  const selectedLesson = lessonId
+    ? allLessons.find((lesson) => lesson.id === lessonId)
+    : null;
+
+  const firstLesson = allLessons[0] ?? null;
 
   return {
     enrollment,
     course: courseDetail.course,
     modules: courseDetail.modules,
-    currentLesson: firstLesson,
+    currentLesson: selectedLesson ?? firstLesson,
   };
 }

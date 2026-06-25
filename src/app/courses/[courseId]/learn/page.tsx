@@ -3,7 +3,6 @@ import {
   BookOpen,
   CheckCircle2,
   Clock,
-  Layers3,
   PlayCircle,
 } from "lucide-react";
 import Link from "next/link";
@@ -22,18 +21,24 @@ type CoursePlayerPageProps = {
   params: Promise<{
     courseId: string;
   }>;
+  searchParams: Promise<{
+    lessonId?: string;
+  }>;
 };
 
 export const dynamic = "force-dynamic";
 
 export default async function CoursePlayerPage({
   params,
+  searchParams,
 }: CoursePlayerPageProps) {
   const { courseId } = await params;
+  const { lessonId } = await searchParams;
 
   const playerData = await getCoursePlayerData({
     courseId,
     studentId: DEMO_STUDENT_ID,
+    lessonId,
   });
 
   if (!playerData) {
@@ -131,12 +136,13 @@ export default async function CoursePlayerPage({
                         );
 
                         return (
-                          <div
+                          <Link
                             key={lesson.id}
-                            className={`rounded-xl border px-3 py-2 text-sm transition ${
+                            href={`/courses/${course.id}/learn?lessonId=${lesson.id}`}
+                            className={`block rounded-xl border px-3 py-2 text-sm transition ${
                               isCurrentLesson
                                 ? "border-primary/30 bg-primary/10 text-primary"
-                                : "border-border bg-muted/40 text-muted-foreground"
+                                : "border-border bg-muted/40 text-muted-foreground hover:bg-muted/70 hover:text-foreground"
                             }`}
                           >
                             <div className="flex items-center gap-2">
@@ -152,7 +158,7 @@ export default async function CoursePlayerPage({
                                 {lesson.position}. {lesson.title}
                               </span>
                             </div>
-                          </div>
+                          </Link>
                         );
                       })}
                     </div>
