@@ -75,6 +75,9 @@ export default async function CoursePlayerPage({
       ? allLessons[currentLessonIndex + 1]
       : null;
 
+  const courseCompleted =
+    progress.totalCount > 0 && progress.completedCount === progress.totalCount;
+
   return (
     <AppShell>
       <main className="mx-auto max-w-7xl px-6 py-10">
@@ -218,6 +221,35 @@ export default async function CoursePlayerPage({
                     )}
                   </div>
 
+                  {courseCompleted ? (
+                    <div className="mt-6 rounded-2xl border border-primary/20 bg-primary/10 p-5">
+                      <div className="flex items-start gap-3">
+                        <div className="rounded-full bg-primary p-2 text-primary-foreground">
+                          <CheckCircle2 className="size-4" />
+                        </div>
+
+                        <div>
+                          <h3 className="font-bold text-foreground">
+                            Course completed
+                          </h3>
+
+                          <p className="mt-1 text-sm leading-6 text-muted-foreground">
+                            You completed every lesson in this course. This
+                            progress is stored in the database and reflected in
+                            My learning.
+                          </p>
+                        </div>
+                      </div>
+
+                      <Link
+                        href="/my-learning"
+                        className="mt-4 inline-flex items-center justify-center rounded-full bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground transition hover:opacity-90"
+                      >
+                        Back to my learning
+                      </Link>
+                    </div>
+                  ) : null}
+
                   <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                     {previousLesson ? (
                       <Link
@@ -230,7 +262,7 @@ export default async function CoursePlayerPage({
                       <span />
                     )}
 
-                    {nextLesson ? (
+                    {nextLesson && !courseCompleted ? (
                       <Link
                         href={`/courses/${course.id}/learn?lessonId=${nextLesson.id}`}
                         className="inline-flex items-center justify-center rounded-full border border-border bg-card px-5 py-3 text-sm font-semibold text-card-foreground transition hover:bg-accent hover:text-accent-foreground"
