@@ -1,8 +1,17 @@
-import { ArrowLeft, BookOpen, CheckCircle2, Clock, Layers3, PlayCircle } from "lucide-react";
+import {
+  ArrowLeft,
+  BookOpen,
+  CheckCircle2,
+  Clock,
+  Layers3,
+  PlayCircle,
+} from "lucide-react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { getCoursePlayerData } from "@/features/courses/services/get-course-player-data";
+import { MarkLessonCompletedForm } from "@/features/progress/components/mark-lesson-completed-form";
+import { getCourseProgress } from "@/features/progress/services/get-course-progress";
 import { AppShell } from "@/shared/ui/app-shell";
 import { SectionCard } from "@/shared/ui/section-card";
 import { StatusPill } from "@/shared/ui/status-pill";
@@ -32,6 +41,20 @@ export default async function CoursePlayerPage({
   }
 
   const { course, modules, currentLesson } = playerData;
+
+  const lessonIds = modules.flatMap((module) =>
+    module.lessons.map((lesson) => lesson.id),
+  );
+
+  const progress = await getCourseProgress({
+    courseId,
+    studentId: DEMO_STUDENT_ID,
+    lessonIds,
+  });
+
+  const currentLessonCompleted = currentLesson
+    ? progress.completedLessonIds.has(currentLesson.id)
+    : false;
 
   return (
     <AppShell>
@@ -67,8 +90,26 @@ export default async function CoursePlayerPage({
                 </div>
               </div>
 
-              <div className="mt-6">
+              <div className="mt-6 flex flex-wrap items-center gap-2">
                 <StatusPill tone="success">enrolled</StatusPill>
+                <StatusPill tone="info">
+                  {`${progress.completionPercentage}% complete`}
+                </StatusPill>
+              </div>
+
+              <div className="mt-5">
+                <div className="h-2 overflow-hidden rounded-full bg-muted">
+                  <div
+                    className="h-full rounded-full bg-primary"
+                    style={{
+                      width: `${progress.completionPercentage}%`,
+                    }}
+                  />
+                </div>
+
+                <p className="mt-2 text-sm text-muted-foreground">
+                  {`${progress.completedCount} of ${progress.totalCount} lessons completed`}
+                </p>
               </div>
             </SectionCard>
 
@@ -85,6 +126,9 @@ export default async function CoursePlayerPage({
                     <div className="mt-2 space-y-2">
                       {module.lessons.map((lesson) => {
                         const isCurrentLesson = lesson.id === currentLesson?.id;
+                        const isCompleted = progress.completedLessonIds.has(
+                          lesson.id,
+                        );
 
                         return (
                           <div
@@ -96,10 +140,12 @@ export default async function CoursePlayerPage({
                             }`}
                           >
                             <div className="flex items-center gap-2">
-                              {isCurrentLesson ? (
+                              {isCompleted ? (
+                                <CheckCircle2 className="size-4 text-emerald-600 dark:text-emerald-400" />
+                              ) : isCurrentLesson ? (
                                 <PlayCircle className="size-4" />
                               ) : (
-                                <CheckCircle2 className="size-4 opacity-60" />
+                                <Clock className="size-4 opacity-60" />
                               )}
 
                               <span>
@@ -131,7 +177,13 @@ export default async function CoursePlayerPage({
                       </h2>
                     </div>
 
-                    <StatusPill tone="info">{currentLesson.type}</StatusPill>
+                    <div className="flex flex-wrap items-center justify-end gap-2">
+                      {currentLessonCompleted ? (
+                        <StatusPill tone="success">completed</StatusPill>
+                      ) : null}
+
+                      <StatusPill tone="info">{currentLesson.type}</StatusPill>
+                    </div>
                   </div>
 
                   <div className="mt-8 rounded-2xl border border-border bg-muted/40 p-6">
@@ -147,13 +199,11 @@ export default async function CoursePlayerPage({
                   </div>
 
                   <div className="mt-8 flex justify-end">
-                    <button
-                      type="button"
-                      disabled
-                      className="inline-flex items-center justify-center rounded-full bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground opacity-60"
-                    >
-                      Progress tracking coming next
-                    </button>
+                    <MarkLessonCompletedForm
+                      courseId={course.id}
+                      lessonId={currentLesson.id}
+                      isCompleted={currentLessonCompleted}
+                    />
                   </div>
                 </>
               ) : (
