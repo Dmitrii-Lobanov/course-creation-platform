@@ -13,7 +13,7 @@ const toneClasses = {
 export function StatusPill({ children, tone = "neutral" }: StatusPillProps) {
   return (
     <span
-      className={`inline-flex items-center rounded-full border px-3 py-1 text-xs font-semibold ${toneClasses[tone]}`}
+      className={`inline-flex items-center rounded-full border px-3 py-1 text-xs font-semibold ${toneClasses[tone]} text-primary`}
     >
       {children}
     </span>

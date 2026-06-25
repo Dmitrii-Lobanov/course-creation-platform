@@ -76,9 +76,7 @@ export async function getCoursePlayerData({
           )
       : [];
 
-  const completedLessonIds = new Set(
-    completedRows.map((row) => row.lessonId),
-  );
+  const completedLessonIds = new Set(completedRows.map((row) => row.lessonId));
 
   const firstIncompleteLesson =
     allLessons.find((lesson) => !completedLessonIds.has(lesson.id)) ?? null;

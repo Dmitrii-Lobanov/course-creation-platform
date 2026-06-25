@@ -32,7 +32,7 @@ export function CreateCourseForm() {
   return (
     <form action={formAction} className="space-y-6">
       <div className="space-y-2">
-        <label htmlFor="title" className="text-sm font-semibold text-slate-800">
+        <label htmlFor="title" className="text-sm font-semibold text-primary">
           Course title
         </label>
 
@@ -58,7 +58,7 @@ export function CreateCourseForm() {
       <div className="space-y-2">
         <label
           htmlFor="description"
-          className="text-sm font-semibold text-slate-800"
+          className="text-sm font-semibold text-primary"
         >
           Description
         </label>
@@ -83,7 +83,7 @@ export function CreateCourseForm() {
       </div>
 
       <div className="space-y-2">
-        <label htmlFor="level" className="text-sm font-semibold text-slate-800">
+        <label htmlFor="level" className="text-sm font-semibold text-primary">
           Course level
         </label>
 

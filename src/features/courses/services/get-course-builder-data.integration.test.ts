@@ -101,6 +101,7 @@ describe("getCourseBuilderData integration", () => {
             moduleId: introModule.id,
             title: "Welcome",
             type: "text",
+            content: "Welcome to the course.",
             position: 1,
           },
           {
@@ -108,6 +109,7 @@ describe("getCourseBuilderData integration", () => {
             moduleId: introModule.id,
             title: "Setup",
             type: "video",
+            content: null,
             position: 2,
           },
         ],
@@ -122,6 +124,7 @@ describe("getCourseBuilderData integration", () => {
             moduleId: advancedModule.id,
             title: "Avoiding re-render cascades",
             type: "text",
+            content: "Use stable selectors and state boundaries.",
             position: 1,
           },
         ],
