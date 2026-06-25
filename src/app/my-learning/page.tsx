@@ -24,6 +24,15 @@ export default async function MyLearningPage() {
     studentId: DEMO_STUDENT_ID,
   });
 
+  const inProgressCourses = enrolledCourses.filter(
+    (course) =>
+      course.completionPercentage > 0 && course.completionPercentage < 100,
+  );
+
+  const completedCourses = enrolledCourses.filter(
+    (course) => course.completionPercentage === 100,
+  );
+
   return (
     <AppShell>
       <main className="mx-auto max-w-7xl px-6 py-10">
@@ -48,7 +57,7 @@ export default async function MyLearningPage() {
               In progress
             </p>
             <p className="mt-3 text-3xl font-bold text-foreground">
-              {enrolledCourses.length}
+              {inProgressCourses.length}
             </p>
           </SectionCard>
 
@@ -56,7 +65,9 @@ export default async function MyLearningPage() {
             <p className="text-sm font-medium text-muted-foreground">
               Completed
             </p>
-            <p className="mt-3 text-3xl font-bold text-foreground">0</p>
+            <p className="mt-3 text-3xl font-bold text-foreground">
+              {completedCourses.length}
+            </p>
           </SectionCard>
         </section>
 
@@ -131,6 +142,27 @@ export default async function MyLearningPage() {
                       <Clock className="size-4" />
                       Enrolled {formatDate(item.enrolledAt)}
                     </span>
+                  </div>
+
+                  <div className="mt-5">
+                    <div className="flex items-center justify-between gap-4 text-sm">
+                      <span className="font-medium text-foreground">
+                        {`${item.completionPercentage}% complete`}
+                      </span>
+
+                      <span className="text-muted-foreground">
+                        {`${item.completedLessons} / ${item.totalLessons} lessons`}
+                      </span>
+                    </div>
+
+                    <div className="mt-2 h-2 overflow-hidden rounded-full bg-muted">
+                      <div
+                        className="h-full rounded-full bg-primary"
+                        style={{
+                          width: `${item.completionPercentage}%`,
+                        }}
+                      />
+                    </div>
                   </div>
                 </Link>
               ))}

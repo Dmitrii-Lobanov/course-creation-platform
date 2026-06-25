@@ -37,9 +37,7 @@ export async function getCourseProgress({
       ),
     );
 
-  const completedLessonIds = new Set(
-    completedRows.map((row) => row.lessonId),
-  );
+  const completedLessonIds = new Set(completedRows.map((row) => row.lessonId));
 
   const completedCount = completedLessonIds.size;
   const totalCount = lessonIds.length;
