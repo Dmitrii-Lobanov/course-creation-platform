@@ -103,7 +103,7 @@ export default async function MyLearningPage() {
               {enrolledCourses.map((item) => (
                 <Link
                   key={item.enrollmentId}
-                  href={`/courses/${item.courseId}`}
+                  href={`/courses/${item.courseId}/learn`}
                   className="group rounded-2xl border border-border bg-card/70 p-5 transition hover:bg-muted/40"
                 >
                   <div className="flex items-start justify-between gap-4">

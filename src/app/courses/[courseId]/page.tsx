@@ -1,4 +1,10 @@
-import { ArrowLeft, BookOpen, CheckCircle2, Clock, Layers3 } from "lucide-react";
+import {
+  ArrowLeft,
+  BookOpen,
+  CheckCircle2,
+  Clock,
+  Layers3,
+} from "lucide-react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
@@ -77,9 +83,7 @@ export default async function CourseDetailPage({
           </SectionCard>
 
           <SectionCard>
-            <p className="text-sm font-medium text-muted-foreground">
-              Lessons
-            </p>
+            <p className="text-sm font-medium text-muted-foreground">Lessons</p>
             <p className="mt-3 text-3xl font-bold text-foreground">
               {lessonCount}
             </p>
@@ -202,6 +206,15 @@ export default async function CourseDetailPage({
                 courseId={course.id}
                 isEnrolled={enrollmentStatus.isEnrolled}
               />
+
+              {enrollmentStatus.isEnrolled ? (
+                <Link
+                  href={`/courses/${course.id}/learn`}
+                  className="mt-3 inline-flex w-full items-center justify-center rounded-full border border-border bg-card px-5 py-3 text-sm font-semibold text-card-foreground transition hover:bg-accent hover:text-accent-foreground"
+                >
+                  Continue learning
+                </Link>
+              ) : null}
             </SectionCard>
           </div>
         </section>

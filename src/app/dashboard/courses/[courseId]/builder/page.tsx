@@ -77,9 +77,7 @@ export default async function CourseBuilderPage({
           </SectionCard>
 
           <SectionCard>
-            <p className="text-sm font-medium text-muted-foreground">
-              Modules
-            </p>
+            <p className="text-sm font-medium text-muted-foreground">Modules</p>
             <p className="mt-3 text-3xl font-bold text-foreground">
               {modules.length}
             </p>
@@ -219,9 +217,7 @@ export default async function CourseBuilderPage({
                       </div>
                     ) : null}
 
-                    {isDraft ? (
-                      <CreateLessonForm moduleId={module.id} />
-                    ) : null}
+                    {isDraft ? <CreateLessonForm moduleId={module.id} /> : null}
                   </div>
                 ))}
               </div>

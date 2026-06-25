@@ -1,4 +1,10 @@
-import { ArrowLeft, BookOpen, CheckCircle2, Clock, Layers3 } from "lucide-react";
+import {
+  ArrowLeft,
+  BookOpen,
+  CheckCircle2,
+  Clock,
+  Layers3,
+} from "lucide-react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
@@ -70,9 +76,7 @@ export default async function CourseDetailPage({
           </SectionCard>
 
           <SectionCard>
-            <p className="text-sm font-medium text-muted-foreground">
-              Lessons
-            </p>
+            <p className="text-sm font-medium text-muted-foreground">Lessons</p>
 
             <p className="mt-3 text-3xl font-bold text-foreground">
               {lessonCount}

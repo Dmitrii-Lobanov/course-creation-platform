@@ -3,15 +3,17 @@ import { and, eq } from "drizzle-orm";
 import { db } from "@/db/client";
 import { enrollments } from "@/db/schema";
 
-type GetEnrollmentStatusInput = {
+import { getPublishedCourseDetail } from "./get-published-course-detail";
+
+type GetCoursePlayerDataInput = {
   courseId: string;
   studentId: string;
 };
 
-export async function getEnrollmentStatus({
+export async function getCoursePlayerData({
   courseId,
   studentId,
-}: GetEnrollmentStatusInput) {
+}: GetCoursePlayerDataInput) {
   const [enrollment] = await db
     .select({
       id: enrollments.id,
@@ -28,8 +30,23 @@ export async function getEnrollmentStatus({
     )
     .limit(1);
 
+  if (!enrollment) {
+    return null;
+  }
+
+  const courseDetail = await getPublishedCourseDetail(courseId);
+
+  if (!courseDetail) {
+    return null;
+  }
+
+  const firstModule = courseDetail.modules[0];
+  const firstLesson = firstModule?.lessons[0] ?? null;
+
   return {
-    isEnrolled: Boolean(enrollment),
-    enrollment: enrollment ?? null,
+    enrollment,
+    course: courseDetail.course,
+    modules: courseDetail.modules,
+    currentLesson: firstLesson,
   };
 }

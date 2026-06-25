@@ -107,7 +107,9 @@ export default async function CoursesPage() {
                             {course.title}
                           </h3>
 
-                          <StatusPill tone="success">{course.status}</StatusPill>
+                          <StatusPill tone="success">
+                            {course.status}
+                          </StatusPill>
                         </div>
 
                         <p className="mt-2 line-clamp-2 text-sm leading-6 text-muted-foreground">

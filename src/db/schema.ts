@@ -116,7 +116,6 @@ export const enrollments = pgTable("enrollments", {
     .defaultNow(),
 });
 
-
 export type Course = typeof courses.$inferSelect;
 export type NewCourse = typeof courses.$inferInsert;
 
