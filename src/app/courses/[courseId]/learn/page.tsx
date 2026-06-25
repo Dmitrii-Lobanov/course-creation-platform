@@ -61,6 +61,20 @@ export default async function CoursePlayerPage({
     ? progress.completedLessonIds.has(currentLesson.id)
     : false;
 
+  const allLessons = modules.flatMap((module) => module.lessons);
+
+  const currentLessonIndex = currentLesson
+    ? allLessons.findIndex((lesson) => lesson.id === currentLesson.id)
+    : -1;
+
+  const previousLesson =
+    currentLessonIndex > 0 ? allLessons[currentLessonIndex - 1] : null;
+
+  const nextLesson =
+    currentLessonIndex >= 0 && currentLessonIndex < allLessons.length - 1
+      ? allLessons[currentLessonIndex + 1]
+      : null;
+
   return (
     <AppShell>
       <main className="mx-auto max-w-7xl px-6 py-10">
@@ -202,6 +216,28 @@ export default async function CoursePlayerPage({
                         This lesson does not have content yet.
                       </p>
                     )}
+                  </div>
+
+                  <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                    {previousLesson ? (
+                      <Link
+                        href={`/courses/${course.id}/learn?lessonId=${previousLesson.id}`}
+                        className="inline-flex items-center justify-center rounded-full border border-border bg-card px-5 py-3 text-sm font-semibold text-card-foreground transition hover:bg-accent hover:text-accent-foreground"
+                      >
+                        ← Previous lesson
+                      </Link>
+                    ) : (
+                      <span />
+                    )}
+
+                    {nextLesson ? (
+                      <Link
+                        href={`/courses/${course.id}/learn?lessonId=${nextLesson.id}`}
+                        className="inline-flex items-center justify-center rounded-full border border-border bg-card px-5 py-3 text-sm font-semibold text-card-foreground transition hover:bg-accent hover:text-accent-foreground"
+                      >
+                        Next lesson →
+                      </Link>
+                    ) : null}
                   </div>
 
                   <div className="mt-8 flex justify-end">
