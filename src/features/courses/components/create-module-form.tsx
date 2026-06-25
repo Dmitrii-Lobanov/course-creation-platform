@@ -35,6 +35,7 @@ export function CreateModuleForm({ courseId }: CreateModuleFormProps) {
           id="module-title"
           name="title"
           type="text"
+          defaultValue={state.values?.title ?? ""}
           placeholder="Example: Getting started"
           className="mt-2 w-full rounded-2xl border border-input bg-background px-4 py-3 text-sm text-foreground outline-none transition placeholder:text-muted-foreground focus:border-ring focus:ring-4 focus:ring-primary/10"
         />

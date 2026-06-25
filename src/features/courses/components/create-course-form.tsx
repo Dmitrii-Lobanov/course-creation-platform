@@ -40,6 +40,7 @@ export function CreateCourseForm() {
           id="title"
           name="title"
           type="text"
+          defaultValue={state.values?.title ?? ""}
           placeholder="Advanced React Performance"
           className="h-12 w-full rounded-2xl border border-border bg-card px-4 text-sm text-foreground shadow-sm outline-none transition placeholder:text-slate-400 focus:border-indigo-300 focus:ring-4 focus:ring-indigo-100"
         />
@@ -66,6 +67,7 @@ export function CreateCourseForm() {
         <textarea
           id="description"
           name="description"
+          defaultValue={state.values?.description ?? ""}
           placeholder="Describe what students will learn, who the course is for, and what outcome they can expect."
           rows={6}
           className="w-full resize-none rounded-2xl border border-border bg-card px-4 py-3 text-sm leading-6 text-foreground shadow-sm outline-none transition placeholder:text-slate-400 focus:border-indigo-300 focus:ring-4 focus:ring-indigo-100"
@@ -90,7 +92,7 @@ export function CreateCourseForm() {
         <select
           id="level"
           name="level"
-          defaultValue=""
+          defaultValue={state.values?.level ?? ""}
           className="h-12 w-full rounded-2xl border border-border bg-card px-4 text-sm text-foreground shadow-sm outline-none transition focus:border-indigo-300 focus:ring-4 focus:ring-indigo-100"
         >
           <option value="" disabled>

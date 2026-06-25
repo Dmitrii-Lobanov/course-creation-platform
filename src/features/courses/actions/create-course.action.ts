@@ -6,6 +6,11 @@ import { createCourseSchema } from "../schemas/course.schema";
 import { createCourseDraft } from "../services/create-course-draft";
 
 export type CreateCourseActionState = {
+  values?: {
+    title?: string;
+    description?: string;
+    level?: string;
+  };
   errors?: {
     title?: string[];
     description?: string[];
@@ -18,14 +23,17 @@ export async function createCourseAction(
   _previousState: CreateCourseActionState,
   formData: FormData,
 ): Promise<CreateCourseActionState> {
-  const parsed = createCourseSchema.safeParse({
-    title: formData.get("title"),
-    description: formData.get("description"),
-    level: formData.get("level"),
-  });
+  const values = {
+    title: String(formData.get("title") ?? ""),
+    description: String(formData.get("description") ?? ""),
+    level: String(formData.get("level") ?? ""),
+  };
+
+  const parsed = createCourseSchema.safeParse(values);
 
   if (!parsed.success) {
     return {
+      values,
       errors: parsed.error.flatten().fieldErrors,
     };
   }
@@ -37,6 +45,7 @@ export async function createCourseAction(
     courseId = createdCourse.id;
   } catch {
     return {
+      values,
       errors: {
         form: ["Something went wrong while creating the course."],
       },

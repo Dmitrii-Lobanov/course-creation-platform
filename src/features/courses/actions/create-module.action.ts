@@ -9,6 +9,9 @@ import { courseModules, courses } from "@/db/schema";
 import { createModuleSchema } from "../schemas/module.schema";
 
 export type CreateModuleActionState = {
+  values?: {
+    title?: string;
+  };
   errors?: {
     title?: string[];
     courseId?: string[];
@@ -20,13 +23,18 @@ export async function createModuleAction(
   _previousState: CreateModuleActionState,
   formData: FormData,
 ): Promise<CreateModuleActionState> {
+  const values = {
+    title: String(formData.get("title") ?? ""),
+  };
+
   const parsed = createModuleSchema.safeParse({
     courseId: formData.get("courseId"),
-    title: formData.get("title"),
+    title: values.title,
   });
 
   if (!parsed.success) {
     return {
+      values,
       errors: parsed.error.flatten().fieldErrors,
     };
   }
@@ -45,6 +53,7 @@ export async function createModuleAction(
 
     if (!course) {
       return {
+        values,
         errors: {
           form: ["Draft course was not found."],
         },
@@ -69,6 +78,7 @@ export async function createModuleAction(
     });
   } catch {
     return {
+      values,
       errors: {
         form: ["Something went wrong while creating the module."],
       },

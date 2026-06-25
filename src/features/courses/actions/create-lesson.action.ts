@@ -9,6 +9,11 @@ import { courseModules, courses, lessons } from "@/db/schema";
 import { createLessonSchema } from "../schemas/lesson.schema";
 
 export type CreateLessonActionState = {
+  values?: {
+    title?: string;
+    type?: string;
+    content?: string;
+  };
   errors?: {
     moduleId?: string[];
     title?: string[];
@@ -22,15 +27,22 @@ export async function createLessonAction(
   _previousState: CreateLessonActionState,
   formData: FormData,
 ): Promise<CreateLessonActionState> {
+  const values = {
+    title: String(formData.get("title") ?? ""),
+    type: String(formData.get("type") ?? "text"),
+    content: String(formData.get("content") ?? ""),
+  };
+
   const parsed = createLessonSchema.safeParse({
     moduleId: formData.get("moduleId"),
-    title: formData.get("title"),
-    type: formData.get("type"),
-    content: formData.get("content"),
+    title: values.title,
+    type: values.type,
+    content: values.content,
   });
 
   if (!parsed.success) {
     return {
+      values,
       errors: parsed.error.flatten().fieldErrors,
     };
   }
@@ -51,6 +63,7 @@ export async function createLessonAction(
 
     if (!module) {
       return {
+        values,
         errors: {
           form: ["Draft module was not found."],
         },
@@ -79,6 +92,7 @@ export async function createLessonAction(
     revalidatePath(`/dashboard/courses/${module.courseId}/builder`);
   } catch {
     return {
+      values,
       errors: {
         form: ["Something went wrong while creating the lesson."],
       },

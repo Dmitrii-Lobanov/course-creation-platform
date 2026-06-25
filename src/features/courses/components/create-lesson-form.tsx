@@ -39,6 +39,7 @@ export function CreateLessonForm({ moduleId }: CreateLessonFormProps) {
             id={`lesson-title-${moduleId}`}
             name="title"
             type="text"
+            defaultValue={state.values?.title ?? ""}
             placeholder="Example: Welcome and setup"
             className="mt-2 w-full rounded-2xl border border-input bg-background px-4 py-3 text-sm text-foreground outline-none transition placeholder:text-muted-foreground focus:border-ring focus:ring-4 focus:ring-primary/10"
           />
@@ -61,7 +62,7 @@ export function CreateLessonForm({ moduleId }: CreateLessonFormProps) {
           <select
             id={`lesson-type-${moduleId}`}
             name="type"
-            defaultValue="text"
+            defaultValue={state.values?.type ?? "text"}
             className="mt-2 w-full rounded-2xl border border-input bg-background px-4 py-3 text-sm text-foreground outline-none transition focus:border-ring focus:ring-4 focus:ring-primary/10"
           >
             <option value="text">Text</option>
@@ -88,6 +89,7 @@ export function CreateLessonForm({ moduleId }: CreateLessonFormProps) {
           id={`lesson-content-${moduleId}`}
           name="content"
           rows={4}
+          defaultValue={state.values?.content ?? ""}
           placeholder="Write the first lesson notes or a video URL placeholder."
           className="mt-2 w-full resize-none rounded-2xl border border-input bg-background px-4 py-3 text-sm text-foreground outline-none transition placeholder:text-muted-foreground focus:border-ring focus:ring-4 focus:ring-primary/10"
         />
