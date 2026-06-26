@@ -1,7 +1,9 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
+
 import { db } from "@/db/client";
 import { courseModules, courses } from "@/db/schema";
 import { resetDatabase } from "@/test/integration/reset-database";
+
 import { createLessonAction } from "./create-lesson.action";
 
 vi.mock("next/cache", () => ({
