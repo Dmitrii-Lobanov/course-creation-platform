@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 
 import { CreateLessonForm } from "@/features/courses/components/create-lesson-form";
 import { CreateModuleForm } from "@/features/courses/components/create-module-form";
+import { EditLessonForm } from "@/features/courses/components/edit-lesson-form";
 import { PublishCourseForm } from "@/features/courses/components/publish-course-form";
 import { getCourseBuilderData } from "@/features/courses/services/get-course-builder-data";
 import { validateCourseForPublishing } from "@/features/courses/services/validate-course-for-publishing";
@@ -212,6 +213,8 @@ export default async function CourseBuilderPage({
                                 {lesson.type}
                               </span>
                             </div>
+
+                            {isDraft ? <EditLessonForm lesson={lesson} /> : null}
                           </div>
                         ))}
                       </div>
