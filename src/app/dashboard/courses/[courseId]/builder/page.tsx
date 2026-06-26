@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import { CreateLessonForm } from "@/features/courses/components/create-lesson-form";
 import { CreateModuleForm } from "@/features/courses/components/create-module-form";
 import { EditLessonForm } from "@/features/courses/components/edit-lesson-form";
+import { EditModuleForm } from "@/features/courses/components/edit-module-form";
 import { PublishCourseForm } from "@/features/courses/components/publish-course-form";
 import { getCourseBuilderData } from "@/features/courses/services/get-course-builder-data";
 import { validateCourseForPublishing } from "@/features/courses/services/validate-course-for-publishing";
@@ -197,6 +198,16 @@ export default async function CourseBuilderPage({
                       </span>
                     </div>
 
+                    {isDraft ? (
+                      <EditModuleForm
+                        module={{
+                          id: module.id,
+                          courseId: course.id,
+                          title: module.title,
+                        }}
+                      />
+                    ) : null}
+
                     {module.lessons.length > 0 ? (
                       <div className="mt-4 space-y-2">
                         {module.lessons.map((lesson) => (
@@ -214,7 +225,9 @@ export default async function CourseBuilderPage({
                               </span>
                             </div>
 
-                            {isDraft ? <EditLessonForm lesson={lesson} /> : null}
+                            {isDraft ? (
+                              <EditLessonForm lesson={lesson} />
+                            ) : null}
                           </div>
                         ))}
                       </div>
