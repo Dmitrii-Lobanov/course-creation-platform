@@ -14,6 +14,7 @@ export type CreateLessonActionState = {
     type?: string;
     content?: string;
   };
+  resetKey?: number;
   errors?: {
     moduleId?: string[];
     title?: string[];
@@ -99,5 +100,7 @@ export async function createLessonAction(
     };
   }
 
-  return {};
+  return {
+    resetKey: Date.now(),
+  };
 }

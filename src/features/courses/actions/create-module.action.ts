@@ -12,6 +12,7 @@ export type CreateModuleActionState = {
   values?: {
     title?: string;
   };
+  resetKey?: number;
   errors?: {
     title?: string[];
     courseId?: string[];
@@ -87,5 +88,7 @@ export async function createModuleAction(
 
   revalidatePath(`/dashboard/courses/${courseId}/builder`);
 
-  return {};
+  return {
+    resetKey: Date.now(),
+  };
 }

@@ -20,7 +20,7 @@ export function CreateModuleForm({ courseId }: CreateModuleFormProps) {
   );
 
   return (
-    <form action={action} className="mt-6 space-y-4">
+    <form key={state.resetKey} action={action} className="mt-6 space-y-4">
       <input type="hidden" name="courseId" value={courseId} />
 
       <div>

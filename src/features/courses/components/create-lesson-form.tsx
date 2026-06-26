@@ -21,6 +21,7 @@ export function CreateLessonForm({ moduleId }: CreateLessonFormProps) {
 
   return (
     <form
+      key={state.resetKey}
       action={action}
       className="mt-4 rounded-2xl border border-border bg-muted/40 p-4"
     >
