@@ -20,5 +20,11 @@ export const updateLessonSchema = createLessonSchema.extend({
   lessonId: z.string().uuid("Invalid lesson id."),
 });
 
+export const deleteLessonSchema = z.object({
+  lessonId: z.string().uuid("Invalid lesson id."),
+  moduleId: z.string().uuid("Invalid module id."),
+});
+
 export type CreateLessonInput = z.infer<typeof createLessonSchema>;
+export type DeleteLessonInput = z.infer<typeof deleteLessonSchema>;
 export type UpdateLessonInput = z.infer<typeof updateLessonSchema>;

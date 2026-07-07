@@ -13,6 +13,7 @@ import { AppShell } from "@/shared/ui/app-shell";
 import { PageHeader } from "@/shared/ui/page-header";
 import { SectionCard } from "@/shared/ui/section-card";
 import { StatusPill } from "@/shared/ui/status-pill";
+import { DeleteLessonForm } from "@/features/courses/components/delete-lesson-form";
 
 type CourseBuilderPageProps = {
   params: Promise<{
@@ -220,9 +221,18 @@ export default async function CourseBuilderPage({
                                 {lesson.position}. {lesson.title}
                               </span>
 
-                              <span className="rounded-full bg-primary/10 px-2.5 py-1 text-xs font-medium capitalize text-primary">
-                                {lesson.type}
-                              </span>
+                              <div className="flex items-center gap-2">
+                                <span className="rounded-full bg-primary/10 px-2.5 py-1 text-xs font-medium capitalize text-primary">
+                                  {lesson.type}
+                                </span>
+
+                                {isDraft ? (
+                                  <DeleteLessonForm
+                                    lessonId={lesson.id}
+                                    moduleId={lesson.moduleId}
+                                  />
+                                ) : null}
+                              </div>
                             </div>
 
                             {isDraft ? (
