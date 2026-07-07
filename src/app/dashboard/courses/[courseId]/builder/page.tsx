@@ -15,6 +15,7 @@ import { SectionCard } from "@/shared/ui/section-card";
 import { StatusPill } from "@/shared/ui/status-pill";
 import { DeleteLessonForm } from "@/features/courses/components/delete-lesson-form";
 import { DeleteModuleForm } from "@/features/courses/components/delete-module-form";
+import { EditCourseForm } from "@/features/courses/components/edit-course-form";
 
 type CourseBuilderPageProps = {
   params: Promise<{
@@ -87,6 +88,28 @@ export default async function CourseBuilderPage({
             </p>
           </SectionCard>
         </section>
+
+        {isDraft ? (
+          <section className="mt-8">
+            <SectionCard>
+              <h2 className="text-xl font-bold text-foreground">
+                Course details
+              </h2>
+              <p className="mt-2 text-sm leading-6 text-muted-foreground">
+                Update the course metadata before publishing.
+              </p>
+
+              <EditCourseForm
+                course={{
+                  id: course.id,
+                  title: course.title,
+                  description: course.description,
+                  level: course.level,
+                }}
+              />
+            </SectionCard>
+          </section>
+        ) : null}
 
         <section className="mt-8 grid gap-6 lg:grid-cols-[0.8fr_1.2fr]">
           <div className="space-y-6">

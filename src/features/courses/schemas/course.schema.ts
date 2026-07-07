@@ -19,3 +19,9 @@ export const createCourseSchema = z.object({
 });
 
 export type CreateCourseInput = z.infer<typeof createCourseSchema>;
+
+export const updateCourseSchema = createCourseSchema.extend({
+  courseId: z.string().uuid("Invalid course id."),
+});
+
+export type UpdateCourseInput = z.infer<typeof updateCourseSchema>;
