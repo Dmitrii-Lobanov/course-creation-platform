@@ -19,7 +19,6 @@ export const deleteModuleSchema = z.object({
   moduleId: z.string().uuid("Invalid module id."),
 });
 
-
 export type CreateModuleInput = z.infer<typeof createModuleSchema>;
 export type DeleteModuleInput = z.infer<typeof deleteModuleSchema>;
 export type UpdateModuleInput = z.infer<typeof updateModuleSchema>;

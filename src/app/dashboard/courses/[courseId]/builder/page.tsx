@@ -14,6 +14,7 @@ import { PageHeader } from "@/shared/ui/page-header";
 import { SectionCard } from "@/shared/ui/section-card";
 import { StatusPill } from "@/shared/ui/status-pill";
 import { DeleteLessonForm } from "@/features/courses/components/delete-lesson-form";
+import { DeleteModuleForm } from "@/features/courses/components/delete-module-form";
 
 type CourseBuilderPageProps = {
   params: Promise<{
@@ -194,9 +195,18 @@ export default async function CourseBuilderPage({
                         {module.position}. {module.title}
                       </h3>
 
-                      <span className="text-sm text-muted-foreground">
-                        {module.lessons.length} lessons
-                      </span>
+                      <div className="flex items-center gap-3">
+                        <span className="text-sm text-muted-foreground">
+                          {module.lessons.length} lessons
+                        </span>
+
+                        {isDraft ? (
+                          <DeleteModuleForm
+                            courseId={course.id}
+                            moduleId={module.id}
+                          />
+                        ) : null}
+                      </div>
                     </div>
 
                     {isDraft ? (
