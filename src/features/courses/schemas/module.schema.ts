@@ -19,6 +19,13 @@ export const deleteModuleSchema = z.object({
   moduleId: z.string().uuid("Invalid module id."),
 });
 
+export const reorderModuleSchema = z.object({
+  courseId: z.string().uuid("Invalid course id."),
+  moduleId: z.string().uuid("Invalid module id."),
+  direction: z.enum(["up", "down"]),
+});
+
 export type CreateModuleInput = z.infer<typeof createModuleSchema>;
 export type DeleteModuleInput = z.infer<typeof deleteModuleSchema>;
 export type UpdateModuleInput = z.infer<typeof updateModuleSchema>;
+export type ReorderModuleInput = z.infer<typeof reorderModuleSchema>;

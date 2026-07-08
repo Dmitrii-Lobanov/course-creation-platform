@@ -16,6 +16,7 @@ import { StatusPill } from "@/shared/ui/status-pill";
 import { DeleteLessonForm } from "@/features/courses/components/delete-lesson-form";
 import { DeleteModuleForm } from "@/features/courses/components/delete-module-form";
 import { EditCourseForm } from "@/features/courses/components/edit-course-form";
+import { ReorderModuleForm } from "@/features/courses/components/reorder-module-form";
 
 type CourseBuilderPageProps = {
   params: Promise<{
@@ -208,7 +209,7 @@ export default async function CourseBuilderPage({
               </div>
             ) : (
               <div className="mt-8 space-y-4">
-                {modules.map((module) => (
+                {modules.map((module, moduleIndex) => (
                   <div
                     key={module.id}
                     className="rounded-2xl border border-border bg-card/70 p-5"
@@ -260,10 +261,28 @@ export default async function CourseBuilderPage({
                                 </span>
 
                                 {isDraft ? (
-                                  <DeleteLessonForm
-                                    lessonId={lesson.id}
-                                    moduleId={lesson.moduleId}
-                                  />
+                                  <>
+                                    <ReorderModuleForm
+                                      courseId={course.id}
+                                      moduleId={module.id}
+                                      direction="up"
+                                      disabled={moduleIndex === 0}
+                                    />
+
+                                    <ReorderModuleForm
+                                      courseId={course.id}
+                                      moduleId={module.id}
+                                      direction="down"
+                                      disabled={
+                                        moduleIndex === modules.length - 1
+                                      }
+                                    />
+
+                                    <DeleteModuleForm
+                                      courseId={course.id}
+                                      moduleId={module.id}
+                                    />
+                                  </>
                                 ) : null}
                               </div>
                             </div>

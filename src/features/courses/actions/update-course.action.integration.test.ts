@@ -103,10 +103,7 @@ describe("updateCourseAction", () => {
 
     formData.set("courseId", course.id);
     formData.set("title", "Should not update");
-    formData.set(
-      "description",
-      "This description should not be persisted.",
-    );
+    formData.set("description", "This description should not be persisted.");
     formData.set("level", "advanced");
 
     const result = await updateCourseAction({}, formData);
