@@ -25,6 +25,13 @@ export const deleteLessonSchema = z.object({
   moduleId: z.string().uuid("Invalid module id."),
 });
 
+export const reorderLessonSchema = z.object({
+  lessonId: z.string().uuid("Invalid lesson id."),
+  moduleId: z.string().uuid("Invalid module id."),
+  direction: z.enum(["up", "down"]),
+});
+
 export type CreateLessonInput = z.infer<typeof createLessonSchema>;
 export type DeleteLessonInput = z.infer<typeof deleteLessonSchema>;
 export type UpdateLessonInput = z.infer<typeof updateLessonSchema>;
+export type ReorderLessonInput = z.infer<typeof reorderLessonSchema>;

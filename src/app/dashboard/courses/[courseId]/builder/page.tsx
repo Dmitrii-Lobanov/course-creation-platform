@@ -17,6 +17,7 @@ import { DeleteLessonForm } from "@/features/courses/components/delete-lesson-fo
 import { DeleteModuleForm } from "@/features/courses/components/delete-module-form";
 import { EditCourseForm } from "@/features/courses/components/edit-course-form";
 import { ReorderModuleForm } from "@/features/courses/components/reorder-module-form";
+import { ReorderLessonForm } from "@/features/courses/components/reorder-lesson-form";
 
 type CourseBuilderPageProps = {
   params: Promise<{
@@ -225,10 +226,26 @@ export default async function CourseBuilderPage({
                         </span>
 
                         {isDraft ? (
-                          <DeleteModuleForm
-                            courseId={course.id}
-                            moduleId={module.id}
-                          />
+                          <>
+                            <ReorderModuleForm
+                              courseId={course.id}
+                              moduleId={module.id}
+                              direction="up"
+                              disabled={moduleIndex === 0}
+                            />
+
+                            <ReorderModuleForm
+                              courseId={course.id}
+                              moduleId={module.id}
+                              direction="down"
+                              disabled={moduleIndex === modules.length - 1}
+                            />
+
+                            <DeleteModuleForm
+                              courseId={course.id}
+                              moduleId={module.id}
+                            />
+                          </>
                         ) : null}
                       </div>
                     </div>
@@ -245,7 +262,7 @@ export default async function CourseBuilderPage({
 
                     {module.lessons.length > 0 ? (
                       <div className="mt-4 space-y-2">
-                        {module.lessons.map((lesson) => (
+                        {module.lessons.map((lesson, lessonIndex) => (
                           <div
                             key={lesson.id}
                             className="rounded-xl border border-border bg-muted/50 px-4 py-3 text-sm text-foreground"
@@ -262,25 +279,26 @@ export default async function CourseBuilderPage({
 
                                 {isDraft ? (
                                   <>
-                                    <ReorderModuleForm
-                                      courseId={course.id}
-                                      moduleId={module.id}
+                                    <ReorderLessonForm
+                                      lessonId={lesson.id}
+                                      moduleId={lesson.moduleId}
                                       direction="up"
-                                      disabled={moduleIndex === 0}
+                                      disabled={lessonIndex === 0}
                                     />
 
-                                    <ReorderModuleForm
-                                      courseId={course.id}
-                                      moduleId={module.id}
+                                    <ReorderLessonForm
+                                      lessonId={lesson.id}
+                                      moduleId={lesson.moduleId}
                                       direction="down"
                                       disabled={
-                                        moduleIndex === modules.length - 1
+                                        lessonIndex ===
+                                        module.lessons.length - 1
                                       }
                                     />
 
-                                    <DeleteModuleForm
-                                      courseId={course.id}
-                                      moduleId={module.id}
+                                    <DeleteLessonForm
+                                      lessonId={lesson.id}
+                                      moduleId={lesson.moduleId}
                                     />
                                   </>
                                 ) : null}
